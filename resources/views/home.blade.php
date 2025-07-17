@@ -2,248 +2,133 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>KaajWala | One‑Stop Service Platform</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KaajWala | Home</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
-
-    .main-header {
-      background: #f96d00;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    .auth-section {
-      background: white;
-      padding: 40px 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 40px;
-    }
-
-    .auth-box {
-      width: 100%;
-      max-width: 400px;
-      background: #fafafa;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-
-    .btn {
-      background: #f96d00;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      width: 100%;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background: #e06700;
-    }
-
-    .auth-links {
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .auth-links a {
-      color: #f96d00;
-      text-decoration: none;
-    }
-
-    .auth-links span {
-      margin: 0 8px;
-      color: #aaa;
-    }
-
-    .info-section {
-      padding: 30px 20px;
-      background: #fffbe6;
-    }
-
-    .info-section h3 {
-      text-align: center;
-    }
-
-    .info-section ul {
-      list-style: none;
-      padding: 0;
-      max-width: 600px;
-      margin: 20px auto;
-    }
-
-    .info-section li {
-      padding: 10px;
-      background: #fff;
-      margin-bottom: 10px;
-      border-left: 5px solid #f96d00;
-      border-radius: 4px;
-    }
-
-    .footer {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .footer p {
-      line-height: 1.6;
-    }
-
-    nav a {
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-      margin: 0 10px;
-      padding: 5px 10px;
-      position: relative;
-      transition: all 0.3s ease;
-      font-size: 18px;
-    }
-
-    nav a:hover {
-      color: #4CAF50;
-      transform: translateY(-2px);
-      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    nav a::before {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: #4CAF50;
-      visibility: hidden;
-      transition: all 0.3s ease-in-out;
-    }
-
-    nav a:hover::before {
-      visibility: visible;
-      width: 100%;
-    }
-    img{
-      height: 200px;
-      width: 70px;
-    }
+    body { font-family:'Roboto',sans-serif; margin:0; background:#f4f4f4; }
+    header { background:#f96d00; color:#fff; padding:20px; position:relative; }
+    header .container { max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    header .logo img { height:60px; }
+    nav a { color:#fff; margin:0 15px; text-decoration:none; font-weight:500; position:relative; }
+    nav a:hover { color:#dcdcdc; }
+    .hero { background:#fff; padding:60px 20px; text-align:center; }
+    .hero h1 { font-size:2.5rem; margin-bottom:15px; color:#333; }
+    .hero p { font-size:1.1rem; color:#666; margin-bottom:30px; }
+    .search-box { max-width:600px; margin:auto; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+    .search-box input, .search-box select { padding:12px; border:1px solid #ccc; border-radius:4px; width:calc(50% - 10px); }
+    .search-box button { background:#f96d00; color:#fff; border:none; padding:12px 20px; border-radius:4px; cursor:pointer; }
+    .hero-img { max-width:400px; margin:auto; margin-top:40px; }
+    .features { max-width:1200px; margin:60px auto; display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:20px; }
+    .feature-card { background:#fff; padding:20px; border-radius:8px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+    .feature-card h3 { color:#f96d00; margin-bottom:10px; }
+    .feature-card p { color:#555; }
+    .cta { text-align:center; margin:50px 0; }
+    .cta a { background:#333; color:#fff; padding:15px 30px; border-radius:5px; text-decoration:none; }
+    .testimonial-section, .app-section, .partners-section { background:#fff; padding:60px 20px; text-align:center; }
+    .testimonial { max-width:800px; margin:20px auto; font-style:italic; color:#444; }
+    .partner-logos img { height:40px; margin:0 10px; opacity:0.8; }
+    .app-buttons img { height:50px; margin:10px; }
+    .footer { background:#222; color:#ccc; padding:40px 20px; text-align:center; }
+    .footer p { margin:5px 0; }
   </style>
 </head>
 <body>
-  <header class="main-header">
-    <div>
-      <img src="{{ asset('images/kaajwala.png') }}" alt="KaajWala Logo" style="height: 60px;">
-    </div>
+
+  <header>
     <div class="container">
-      <h1>Welcome to KaajWala</h1>
-      <p>Your trusted platform to find skilled workers across Bangladesh</p>
+      <div class="logo">
+        <img src="{{ asset('images/kaajwala-logo.png') }}" alt="KaajWala">
+      </div>
+      <nav>
+        <a href="{{ url('/') }}">Home</a>
+        <a href="{{ url('/about') }}">About</a>
+        <a href="{{ url('/services') }}">Services</a>
+        <a href="{{ url('/contact') }}">Contact</a>
+        <a href="{{ url('/portfolio') }}">Portfolio</a>
+      </nav>
     </div>
-    <nav>
-      <a href="{{ url('/') }}">Home</a>
-      <a href="{{ url('/about') }}">About</a> |
-      <a href="{{ url('/services') }}">Services</a> |
-      <a href="{{ url('/contact') }}">Contact</a> |
-      <a href="{{ url('/portfolio') }}">Protfolio</a>
-    </nav>
   </header>
 
-  <section class="auth-section">
-    <div class="auth-box">
-      <h2>Sign In as a User</h2>
-      <form action="{{ url('/dashboard') }}" method="GET">
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-          <button type="submit" class="btn">Sign In</button>
-        </div>
-
-        <div class="auth-links">
-          <a href="{{ url('/password-reset') }}">Forgot Password?</a>
-          <span>|</span>
-          <a href="{{ url('/register-user') }}">Create an Account</a>
-        </div>
-      </form>
-    </div>
-
-    <div class="auth-box">
-      <h2>Sign In as a Worker</h2>
-      <form action="{{ url('/worker-profile') }}" method="GET">
-        <div class="form-group">
-          <label for="worker_email">Email Address</label>
-          <input type="email" id="worker_email" name="worker_email" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-          <label for="worker_password">Password</label>
-          <input type="password" id="worker_password" name="worker_password" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-          <button type="submit" class="btn">Sign In</button>
-        </div>
-
-        <div class="auth-links">
-          <a href="{{ url('/worker-forgot-password') }}">Forgot Password?</a>
-          <span>|</span>
-          <a href="{{ url('/worker-register') }}">Create Worker Account</a>
-        </div>
-      </form>
+  <section class="hero">
+    <div class="container">
+      <h1>Your Trusted Home & Office Service Platform</h1>
+      <p>Book electricians, plumbers, cleaners & more — instantly and reliably across Bangladesh.</p>
+      <div class="search-box">
+        <input type="text" placeholder="What do you need? e.g. Electrician">
+        <select>
+          <option>Choose City/Area</option>
+          <option>Dhaka</option>
+          <option>Chittagong</option>
+          <option>Sylhet</option>
+        </select>
+        <button>Search</button>
+      </div>
+      <img src="{{ asset('images/hero-servant.png') }}" alt="Service Illustration" class="hero-img">
     </div>
   </section>
 
-  <section class="info-section">
-    <div class="container">
-      <h3>Why KaajWala?</h3>
-      <ul>
-        <li>🔧 Book trusted electricians, plumbers, and handymen instantly</li>
-        <li>📞 24/7 customer support available</li>
-        <li>📍 Location-based worker search</li>
-        <li>📱 Easy-to-use mobile and web interface</li>
-        <li>✅ Verified profiles and reviews</li>
-      </ul>
+  <section class="features">
+    <div class="feature-card">
+      <h3>🔌 Electrician</h3>
+      <p>Fast & professional electrical services when you need them.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🚰 Plumber</h3>
+      <p>Fix leaks, install pipes & maintain plumbing systems.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🧹 Cleaner</h3>
+      <p>Deep cleaning or regular housekeeping delivered to your door.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🛠️ Mechanic</h3>
+      <p>Repair home appliances and tools—anywhere, anytime.</p>
+    </div>
+    <div class="feature-card">
+      <h3>📦 Moving Services</h3>
+      <p>Hassle-free shifting for home and office.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🎨 Painter</h3>
+      <p>Affordable painting services for interior and exterior walls.</p>
+    </div>
+  </section>
+
+  <div class="cta">
+    <a href="{{ url('/services') }}">Explore All Services →</a>
+  </div>
+
+  <section class="testimonial-section">
+    <h2>What Our Customers Say</h2>
+    <div class="testimonial">“KaajWala saved me hours of searching. Reliable and fast!” — Rezaul Karim, Dhaka</div>
+    <div class="testimonial">“Their workers are very professional. Highly recommended.” — Nasima Akter, Chittagong</div>
+  </section>
+
+  <section class="app-section">
+    <h2>Download Our Mobile App</h2>
+    <p>Enjoy easier booking and real-time tracking on the go!</p>
+    <div class="app-buttons">
+      <img src="{{ asset('images/google-play.png') }}" alt="Google Play">
+      <img src="{{ asset('images/app-store.png') }}" alt="App Store">
+    </div>
+  </section>
+
+  <section class="partners-section">
+    <h2>Our Trusted Partners</h2>
+    <div class="partner-logos">
+      <img src="{{ asset('images/partner1.png') }}" alt="Partner 1">
+      <img src="{{ asset('images/partner2.png') }}" alt="Partner 2">
+      <img src="{{ asset('images/partner3.png') }}" alt="Partner 3">
     </div>
   </section>
 
   <footer class="footer">
-    <div class="container">
-      <p>
-        <strong>Emergency Contact:</strong> +880 1518996430<br>
-        <strong>Email:</strong> kaajwala247@gmail.com<br>
-        <strong>Address:</strong> Road no-5, Block A, Mirpur 1, Dhaka, Bangladesh<br>
-        <strong>Working Days:</strong> Saturday to Saturday, 9:00 AM - 9:00 PM
-      </p>
-    </div>
+    <p>Emergency Contact: +880 1518996430 | Email: kaajwala247@gmail.com</p>
+    <p>Address: Road no-5, Block A, Mirpur 1, Dhaka, Bangladesh</p>
+    <p>Working Hours: Saturday–Saturday, 9 AM–9 PM</p>
+    <p>© 2025 KaajWala. All Rights Reserved.</p>
   </footer>
+
 </body>
 </html>

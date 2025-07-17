@@ -47,3 +47,6 @@ Route::get('worker-forgot-password', function () {
 Route::get('/worker-profile', function () {
     return view('worker-profile');
 });
+Route::get('/login', function () {
+    return view('login');
+});
