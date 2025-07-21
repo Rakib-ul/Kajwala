@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+//rakibul 
+use App\Http\Controllers\AuthController;
+//endrakibul 
 
 Route::get('/', function () {
     return view('home');
@@ -50,3 +53,16 @@ Route::get('/worker-profile', function () {
 Route::get('/login', function () {
     return view('login');
 });
+
+//rakibul edit 
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/register-user', [AuthController::class, 'showRegisterForm']);
+Route::post('/register-user', [AuthController::class, 'register']);
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/dashboard', function () {
+    return view('dashboard'); // create a dashboard.blade.php later
+})->middleware('auth');
