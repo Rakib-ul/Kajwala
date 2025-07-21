@@ -1253,8 +1253,7 @@
         </ul>
         
         <div class="nav-buttons">
-          <a href="{{ url('/login') }}" class="btn btn-outline">Login</a>
-          <a href="{{ url('/register') }}" class="btn btn-primary">Sign Up</a>
+          <a href="{{ url('/login') }}" class="btn btn-outline">Login</a>    
         </div>
       </nav>
     </div>
