@@ -169,7 +169,24 @@
     <h2>Welcome Back</h2>
     <p>Login to continue using KaajWala</p>
 
-    <form action="{{ url('/dashboard') }}" method="POST">
+    @if(session('success'))
+        <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 6px; border: 1px solid #c3e6cb; margin-bottom: 15px; text-align: center;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+     @if($errors->any())
+        <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 6px; border: 1px solid #f5c6cb; margin-bottom: 15px;">
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                @foreach ($errors->all() as $error)
+                    <li>• {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('login') }}" method="POST">
+      @csrf
       <div class="form-group">
         <label for="email">Email Address</label>
         <input type="email" id="email" name="email" class="form-control" required>
