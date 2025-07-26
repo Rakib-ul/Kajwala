@@ -53,7 +53,12 @@ Route::get('/worker-profile', function () {
 Route::get('/login', function () {
     return view('login');
 });
-
+Route::get('/worker-login', function () {
+    return view('worker-login');
+});
+Route::get('/providers', function () {
+    return view('providers');
+});
 //rakibul edit 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

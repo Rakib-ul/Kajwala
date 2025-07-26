@@ -1688,19 +1688,49 @@
   </section>
 
   <!-- CTA Section -->
-  <section class="cta-section">
-    <div class="container">
-      <div class="cta-content">
-        <h2>Ready to Get Started?</h2>
-        <p>Join thousands of satisfied customers who trust KaajWala for their home and office service needs.</p>
+<section class="worker-cta-section" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; padding: 80px 0; text-align: center; color: white;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    <div class="worker-cta-content" style="max-width: 800px; margin: 0 auto;">
+      <h2 style="font-size: 2.5rem; margin-bottom: 20px; font-weight: 700;">Join Our Team of Professional Service Providers</h2>
+      <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9;">Earn competitive wages, set your own schedule, and be part of Bangladesh's most trusted home services platform.</p>
+      
+      <div class="worker-cta-buttons" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <a href="{{ url('/worker-register') }}" class="btn-worker-primary" style="background: #f96d00; color: white; padding: 15px 30px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; display: inline-block; border: 2px solid #f96d00;">
+          <i class="fas fa-user-plus" style="margin-right: 10px;"></i> Register as Worker
+        </a>
+        <a href="{{ url('/worker-benefits') }}" class="btn-worker-secondary" style="background: transparent; color: white; padding: 15px 30px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; display: inline-block; border: 2px solid white;">
+          <i class="fas fa-info-circle" style="margin-right: 10px;"></i> Learn More
+        </a>
+      </div>
+
+      <div class="worker-benefits" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 50px; text-align: left;">
+        <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; backdrop-filter: blur(5px);">
+          <div class="benefit-icon" style="font-size: 2rem; color: #f96d00; margin-bottom: 15px;">
+            <i class="fas fa-wallet"></i>
+          </div>
+          <h3 style="margin-bottom: 10px;">Competitive Earnings</h3>
+          <p style="opacity: 0.9; font-size: 0.95rem;">Keep up to 80% of your service fees with transparent pricing.</p>
+        </div>
         
-        <div class="cta-buttons">
-          <a href="{{ url('/booking') }}" class="btn btn-white">Book a Service Now</a>
-          <a href="{{ url('/providers') }}" class="btn btn-transparent">Become a Provider</a>
+        <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; backdrop-filter: blur(5px);">
+          <div class="benefit-icon" style="font-size: 2rem; color: #f96d00; margin-bottom: 15px;">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <h3 style="margin-bottom: 10px;">Flexible Schedule</h3>
+          <p style="opacity: 0.9; font-size: 0.95rem;">Choose when you work and how many jobs you take.</p>
+        </div>
+        
+        <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; backdrop-filter: blur(5px);">
+          <div class="benefit-icon" style="font-size: 2rem; color: #f96d00; margin-bottom: 15px;">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 style="margin-bottom: 10px;">Job Security</h3>
+          <p style="opacity: 0.9; font-size: 0.95rem;">Regular work opportunities in your area.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- App Download -->
   <section class="app-download">
