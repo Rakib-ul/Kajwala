@@ -479,7 +479,7 @@
         <img src="{{ asset('images/kaajwala.png') }}" alt="KaajWala Logo" class="logo">
       </a>
       <h1>Contact KaajWala</h1>
-      <p>We're here to help with all your home service needs</p>
+      <p>We're here to help with all your home service as your needs</p>
       <nav>
         <ul class="nav-links">
           <li><a href="{{ url('/') }}">Home</a></li>
