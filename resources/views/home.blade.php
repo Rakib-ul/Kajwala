@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>KaajWala | Professional Service Marketplace</title>
+  <title>KaajWala | Bangladesh's Premier Service Marketplace</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find trusted professionals for all your home and office needs in Bangladesh. Fast, reliable, and affordable services at your doorstep.">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -15,6 +16,7 @@
       --dark: #292F36;
       --light: #F7FFF7;
       --gray: #6C757D;
+      --light-gray: #f8f9fa;
       --success: #4BB543;
       --warning: #FFC107;
       --danger: #DC3545;
@@ -23,7 +25,8 @@
       --shadow-sm: 0 2px 8px rgba(0,0,0,0.1);
       --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
       --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
-      --transition: all 0.3s ease;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --border-radius: 12px;
     }
     
     * {
@@ -35,9 +38,10 @@
     body {
       font-family: 'Poppins', sans-serif;
       color: var(--dark);
-      background-color: #f9f9f9;
+      background-color: var(--light-gray);
       line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
     
     .container {
@@ -54,13 +58,13 @@
       width: 100%;
       z-index: 1000;
       transition: var(--transition);
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(10px);
       box-shadow: var(--shadow-sm);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
     
     header.scrolled {
-      background: rgba(255, 255, 255, 0.98);
       box-shadow: var(--shadow-md);
     }
     
@@ -74,10 +78,11 @@
     .logo {
       display: flex;
       align-items: center;
+      text-decoration: none;
     }
     
     .logo img {
-      height: 50px;
+      height: 45px;
       transition: var(--transition);
     }
     
@@ -89,6 +94,7 @@
       background: var(--gradient-primary);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
     }
     
     nav {
@@ -112,7 +118,7 @@
       font-weight: 500;
       font-size: 0.95rem;
       padding: 10px 15px;
-      border-radius: 6px;
+      border-radius: var(--border-radius);
       display: flex;
       align-items: center;
       transition: var(--transition);
@@ -138,7 +144,7 @@
       left: 0;
       width: 220px;
       background: white;
-      border-radius: 8px;
+      border-radius: var(--border-radius);
       box-shadow: var(--shadow-lg);
       padding: 10px 0;
       opacity: 0;
@@ -176,26 +182,30 @@
     }
     
     .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 600;
       text-align: center;
       text-decoration: none;
       cursor: pointer;
       transition: var(--transition);
       border: none;
       font-size: 0.95rem;
+      white-space: nowrap;
     }
     
     .btn-primary {
       background: var(--gradient-primary);
       color: white;
+      box-shadow: 0 4px 15px rgba(249, 65, 68, 0.2);
     }
     
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(249, 65, 68, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(249, 65, 68, 0.3);
     }
     
     .btn-outline {
@@ -207,6 +217,7 @@
     
     .btn-outline:hover {
       background: rgba(255, 107, 53, 0.1);
+      transform: translateY(-2px);
     }
     
     .mobile-menu-btn {
@@ -216,6 +227,13 @@
       font-size: 1.5rem;
       color: var(--dark);
       cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+    
+    .mobile-menu-btn:hover {
+      background: rgba(0,0,0,0.05);
     }
     
     /* Hero Section */
@@ -226,7 +244,8 @@
       padding: 150px 0 80px;
       position: relative;
       overflow: hidden;
-      background: linear-gradient(135deg, rgba(41,47,54,0.9) 0%, rgba(65,72,82,0.9) 100%), url('{{ asset('images/hero-bg.jpg') }}') no-repeat center center/cover;
+      background: linear-gradient(135deg, rgba(41,47,54,0.95) 0%, rgba(65,72,82,0.95) 100%), url('{{ asset('images/hero-bg.jpg') }}') no-repeat center center/cover;
+      background-attachment: fixed;
     }
     
     .hero-content {
@@ -237,38 +256,54 @@
     }
     
     .hero h1 {
-      font-size: 3.2rem;
+      font-size: 3.5rem;
       font-weight: 700;
       line-height: 1.2;
       margin-bottom: 20px;
       font-family: 'Montserrat', sans-serif;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       margin-bottom: 30px;
       opacity: 0.9;
+      max-width: 90%;
     }
     
     .hero-btns {
       display: flex;
       gap: 15px;
       margin-bottom: 40px;
+      flex-wrap: wrap;
     }
     
     .hero-btns .btn {
-      padding: 12px 25px;
+      padding: 14px 28px;
       font-size: 1rem;
+      min-width: 180px;
     }
     
     .hero-stats {
       display: flex;
       gap: 30px;
+      flex-wrap: wrap;
     }
     
     .stat-item {
       display: flex;
       align-items: center;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(5px);
+      padding: 15px 20px;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: var(--transition);
+    }
+    
+    .stat-item:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-3px);
     }
     
     .stat-icon {
@@ -293,173 +328,162 @@
     
     .hero-image {
       position: absolute;
-      right: 0;
+      right: 5%;
       bottom: 0;
-      width: 50%;
-      max-width: 700px;
+      width: 45%;
+      max-width: 650px;
       z-index: 1;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
     }
     
     /* Search Section */
-.search-section {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  padding: 50px 0;
-  position: relative;
-  z-index: 10;
-  margin: -50px auto 0;
-  width: 90%;
-  max-width: 1200px;
-  border-radius: 20px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transform: translateY(0);
-  transition: all 0.3s ease;
-}
-
-.search-section:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.search-container {
-  padding: 0 30px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.search-title {
-  text-align: center;
-  margin-bottom: 30px;
-  color: var(--dark);
-}
-
-.search-title h2 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  font-weight: 700;
-}
-
-.search-title p {
-  color: var(--gray);
-  font-size: 1.1rem;
-}
-
-.search-form {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  align-items: center;
-}
-
-.search-input {
-  position: relative;
-}
-
-.search-input input,
-.search-input select {
-  width: 100%;
-  padding: 16px 50px 16px 20px;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.search-input input:focus,
-.search-input select:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
-  background: white;
-}
-
-.search-input i {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--gray);
-  pointer-events: none;
-}
-
-.search-btn {
-  grid-column: 1 / -1;
-  background: var(--gradient-primary);
-  color: white;
-  border: none;
-  padding: 18px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-}
-
-.search-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(249, 65, 68, 0.4);
-}
-
-/* Search suggestions */
-.search-suggestions {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: white;
-  border-radius: 0 0 12px 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-  display: none;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.search-suggestions.show {
-  display: block;
-}
-
-.search-suggestions div {
-  padding: 12px 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.search-suggestions div:hover {
-  background: rgba(255, 107, 53, 0.1);
-  color: var(--primary);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .search-section {
-    width: 95%;
-    padding: 30px 0;
-    margin-top: -30px;
-  }
-  
-  .search-title h2 {
-    font-size: 1.6rem;
-  }
-  
-  .search-form {
-    grid-template-columns: 1fr;
-  }
-  
-  .search-btn {
-    margin-top: 0;
-  }
-}
+    .search-section {
+      background: white;
+      padding: 60px 0;
+      position: relative;
+      z-index: 10;
+      margin-top: -50px;
+      box-shadow: var(--shadow-md);
+      border-radius: var(--border-radius);
+      width: calc(100% - 40px);
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .search-container {
+      padding: 0 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .search-title {
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--dark);
+    }
+    
+    .search-title h2 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .search-title p {
+      color: var(--gray);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .search-form {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr auto;
+      gap: 15px;
+      align-items: center;
+    }
+    
+    .search-input {
+      position: relative;
+    }
+    
+    .search-input input,
+    .search-input select {
+      width: 100%;
+      padding: 16px 50px 16px 20px;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: var(--transition);
+      background: white;
+      box-shadow: var(--shadow-sm);
+      appearance: none;
+    }
+    
+    .search-input input:focus,
+    .search-input select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+    }
+    
+    .search-input i {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+      pointer-events: none;
+    }
+    
+    .search-btn {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: 16px 25px;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .search-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .search-btn i {
+      margin-left: 8px;
+    }
+    
+    /* Search suggestions */
+    .search-suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: white;
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+      display: none;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .search-suggestions.show {
+      display: block;
+    }
+    
+    .search-suggestions div {
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .search-suggestions div:hover {
+      background: rgba(255, 107, 53, 0.1);
+      color: var(--primary);
+    }
     
     /* Services Section */
     .services {
       padding: 100px 0;
-      background: linear-gradient(to bottom, #f9f9f9 0%, white 100%);
+      background: white;
+      position: relative;
     }
     
     .section-title {
@@ -492,21 +516,23 @@
       color: var(--gray);
       max-width: 700px;
       margin: 0 auto;
+      font-size: 1.1rem;
     }
     
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 30px;
     }
     
     .service-card {
       background: white;
-      border-radius: 12px;
+      border-radius: var(--border-radius);
       overflow: hidden;
       box-shadow: var(--shadow-sm);
       transition: var(--transition);
       position: relative;
+      border: 1px solid rgba(0,0,0,0.05);
     }
     
     .service-card:hover {
@@ -515,8 +541,9 @@
     }
     
     .service-img {
-      height: 180px;
+      height: 200px;
       overflow: hidden;
+      position: relative;
     }
     
     .service-img img {
@@ -527,7 +554,7 @@
     }
     
     .service-card:hover .service-img img {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
     
     .service-content {
@@ -556,6 +583,7 @@
       color: var(--gray);
       margin-bottom: 20px;
       font-size: 0.95rem;
+      line-height: 1.6;
     }
     
     .service-meta {
@@ -563,7 +591,7 @@
       justify-content: space-between;
       align-items: center;
       padding-top: 15px;
-      border-top: 1px solid #eee;
+      border-top: 1px solid rgba(0,0,0,0.05);
     }
     
     .service-price {
@@ -583,10 +611,77 @@
       margin-right: 5px;
     }
     
+    .view-all-btn {
+      text-align: center;
+      margin-top: 50px;
+    }
+    
+    .view-all-btn .btn {
+      padding: 14px 30px;
+      font-size: 1rem;
+      min-width: 250px;
+    }
+    
+    /* Features Section */
+    .features {
+      padding: 100px 0;
+      background: var(--light-gray);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+    
+    .feature-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+      font-size: 2rem;
+    }
+    
+    .feature-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--dark);
+    }
+    
+    .feature-description {
+      color: var(--gray);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
     /* How It Works */
     .how-it-works {
       padding: 100px 0;
       background: white;
+      position: relative;
+      overflow: hidden;
     }
     
     .steps {
@@ -606,27 +701,30 @@
     }
     
     .step-number {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       background: var(--gradient-primary);
       color: white;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       font-weight: 700;
       margin: 0 auto 25px;
       position: relative;
       z-index: 2;
+      box-shadow: 0 5px 15px rgba(249, 65, 68, 0.3);
     }
     
     .step-content {
       background: white;
-      padding: 30px;
-      border-radius: 12px;
+      padding: 40px 30px;
+      border-radius: var(--border-radius);
       box-shadow: var(--shadow-sm);
       transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
+      height: 100%;
     }
     
     .step:hover .step-content {
@@ -650,11 +748,12 @@
     .step-description {
       color: var(--gray);
       font-size: 0.95rem;
+      line-height: 1.6;
     }
     
     .steps-line {
       position: absolute;
-      top: 30px;
+      top: 35px;
       left: 0;
       width: 100%;
       height: 3px;
@@ -666,7 +765,9 @@
     .testimonials {
       padding: 100px 0;
       background: linear-gradient(135deg, rgba(41,47,54,0.95) 0%, rgba(65,72,82,0.95) 100%), url('{{ asset('images/testimonial-bg.jpg') }}') no-repeat center center/cover;
+      background-attachment: fixed;
       color: white;
+      position: relative;
     }
     
     .testimonials .section-title h2 {
@@ -685,11 +786,12 @@
     .testimonial-card {
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(10px);
-      border-radius: 12px;
-      padding: 30px;
+      border-radius: var(--border-radius);
+      padding: 40px;
       margin: 0 15px;
       border: 1px solid rgba(255,255,255,0.1);
       transition: var(--transition);
+      height: 100%;
     }
     
     .testimonial-card:hover {
@@ -701,6 +803,8 @@
       font-style: italic;
       margin-bottom: 25px;
       position: relative;
+      font-size: 1.05rem;
+      line-height: 1.8;
     }
     
     .testimonial-text:before {
@@ -719,12 +823,13 @@
     }
     
     .author-avatar {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       overflow: hidden;
       margin-right: 15px;
       border: 3px solid var(--accent);
+      flex-shrink: 0;
     }
     
     .author-avatar img {
@@ -734,7 +839,7 @@
     }
     
     .author-info h4 {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       margin-bottom: 5px;
     }
     
@@ -746,6 +851,7 @@
     .testimonial-rating {
       color: var(--accent);
       margin-top: 5px;
+      font-size: 0.9rem;
     }
     
     /* Partners */
@@ -759,7 +865,7 @@
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 30px;
+      gap: 40px;
       margin-top: 50px;
     }
     
@@ -781,111 +887,150 @@
       object-fit: contain;
     }
     
-    /* CTA Section */
-    .cta-section {
+    /* Worker CTA Section */
+    .worker-cta-section {
       padding: 100px 0;
-      background: var(--gradient-primary);
+      background: linear-gradient(135deg, rgba(41,47,54,0.95) 0%, rgba(65,72,82,0.95) 100%), url('{{ asset('images/workers-bg.jpg') }}') no-repeat center center/cover;
+      background-attachment: fixed;
       color: white;
       text-align: center;
       position: relative;
-      overflow: hidden;
     }
     
-    .cta-section:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('{{ asset('images/pattern.png') }}') repeat;
-      opacity: 0.1;
-    }
-    
-    .cta-content {
+    .worker-cta-content {
       position: relative;
       z-index: 2;
-      max-width: 700px;
+      max-width: 800px;
       margin: 0 auto;
     }
     
-    .cta-content h2 {
+    .worker-cta-content h2 {
       font-size: 2.5rem;
       margin-bottom: 20px;
       font-family: 'Montserrat', sans-serif;
+      line-height: 1.3;
     }
     
-    .cta-content p {
-      font-size: 1.1rem;
+    .worker-cta-content p {
+      font-size: 1.2rem;
       margin-bottom: 30px;
       opacity: 0.9;
     }
     
-    .cta-buttons {
+    .worker-cta-buttons {
       display: flex;
       justify-content: center;
       gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 50px;
     }
     
-    .cta-buttons .btn {
+    .worker-cta-buttons .btn {
       padding: 15px 30px;
       font-size: 1rem;
       font-weight: 600;
+      min-width: 220px;
     }
     
-    .btn-white {
-      background: white;
-      color: var(--primary);
+    .btn-worker-primary {
+      background: var(--primary);
+      color: white;
     }
     
-    .btn-white:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    .btn-worker-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(249, 65, 68, 0.3);
     }
     
-    .btn-transparent {
+    .btn-worker-secondary {
       background: transparent;
       color: white;
       border: 2px solid white;
     }
     
-    .btn-transparent:hover {
+    .btn-worker-secondary:hover {
       background: rgba(255,255,255,0.1);
+      transform: translateY(-3px);
+    }
+    
+    .worker-benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+      text-align: left;
+    }
+    
+    .benefit-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: var(--transition);
+    }
+    
+    .benefit-item:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .benefit-icon {
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    
+    .benefit-item h3 {
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+    
+    .benefit-item p {
+      opacity: 0.9;
+      font-size: 0.95rem;
+      line-height: 1.6;
     }
     
     /* App Download */
     .app-download {
-      padding: 80px 0;
-      background: linear-gradient(to right, #f9f9f9 0%, white 100%);
+      padding: 100px 0;
+      background: white;
     }
     
     .app-container {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
+      gap: 50px;
     }
     
     .app-content {
       flex: 1;
       min-width: 300px;
-      padding-right: 40px;
     }
     
     .app-content h2 {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       margin-bottom: 20px;
       font-family: 'Montserrat', sans-serif;
       color: var(--dark);
+      line-height: 1.3;
     }
     
     .app-content p {
       color: var(--gray);
       margin-bottom: 30px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 500px;
     }
     
     .app-buttons {
       display: flex;
       gap: 15px;
+      flex-wrap: wrap;
     }
     
     .app-btn {
@@ -897,6 +1042,7 @@
       border-radius: 8px;
       text-decoration: none;
       transition: var(--transition);
+      min-width: 180px;
     }
     
     .app-btn:hover {
@@ -930,6 +1076,79 @@
       max-width: 100%;
       height: auto;
       max-height: 500px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    /* Newsletter */
+    .newsletter {
+      padding: 80px 0;
+      background: var(--gradient-primary);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .newsletter:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('{{ asset('images/pattern.png') }}') repeat;
+      opacity: 0.1;
+    }
+    
+    .newsletter-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .newsletter h2 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .newsletter p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .newsletter-input {
+      flex: 1;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px 0 0 50px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      outline: none;
+    }
+    
+    .newsletter-btn {
+      background: var(--dark);
+      color: white;
+      border: none;
+      padding: 0 25px;
+      border-radius: 0 50px 50px 0;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .newsletter-btn:hover {
+      background: #1a1f24;
     }
     
     /* Footer */
@@ -937,11 +1156,12 @@
       background: var(--dark);
       color: white;
       padding: 80px 0 30px;
+      position: relative;
     }
     
     .footer-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 40px;
       margin-bottom: 60px;
     }
@@ -970,6 +1190,7 @@
       opacity: 0.7;
       font-size: 0.95rem;
       margin-bottom: 20px;
+      line-height: 1.6;
     }
     
     .social-links {
@@ -1025,11 +1246,12 @@
       text-decoration: none;
       transition: var(--transition);
       font-size: 0.95rem;
+      display: inline-block;
     }
     
     .footer-links a:hover {
       color: white;
-      padding-left: 5px;
+      transform: translateX(5px);
     }
     
     .footer-contact p {
@@ -1044,6 +1266,7 @@
       margin-right: 10px;
       color: var(--primary);
       font-size: 1rem;
+      margin-top: 3px;
     }
     
     .footer-bottom {
@@ -1057,10 +1280,28 @@
       font-size: 0.9rem;
     }
     
+    .footer-bottom a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .footer-bottom a:hover {
+      color: var(--primary);
+    }
+    
     /* Responsive Styles */
     @media (max-width: 1200px) {
       .hero h1 {
-        font-size: 2.8rem;
+        font-size: 3rem;
+      }
+      
+      .search-form {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .search-btn {
+        grid-column: 1 / -1;
       }
     }
     
@@ -1084,6 +1325,24 @@
       
       .step:last-child {
         margin-bottom: 0;
+      }
+      
+      .app-container {
+        flex-direction: column-reverse;
+      }
+      
+      .app-content {
+        text-align: center;
+        margin-top: 30px;
+      }
+      
+      .app-buttons {
+        justify-content: center;
+      }
+      
+      .app-content p {
+        margin-left: auto;
+        margin-right: auto;
       }
     }
     
@@ -1109,42 +1368,51 @@
         display: none;
       }
       
+      .hero p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
       .hero-btns {
         justify-content: center;
       }
       
       .hero-stats {
         justify-content: center;
-        flex-wrap: wrap;
       }
       
       .search-section {
         margin-top: 0;
         border-radius: 0;
+        width: 100%;
       }
       
-      .app-container {
-        flex-direction: column-reverse;
+      .search-form {
+        grid-template-columns: 1fr;
       }
       
-      .app-content {
-        padding-right: 0;
-        text-align: center;
-        margin-top: 30px;
+      .newsletter-form {
+        flex-direction: column;
       }
       
-      .app-buttons {
-        justify-content: center;
+      .newsletter-input {
+        border-radius: 50px;
+        margin-bottom: 10px;
+      }
+      
+      .newsletter-btn {
+        border-radius: 50px;
+        padding: 15px;
       }
     }
     
     @media (max-width: 576px) {
       .hero h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
       
       .hero p {
-        font-size: 1rem;
+        font-size: 1.1rem;
       }
       
       .hero-btns {
@@ -1160,52 +1428,22 @@
         font-size: 2rem;
       }
       
-      .cta-buttons {
+      .worker-cta-buttons {
         flex-direction: column;
         gap: 10px;
       }
       
-      .cta-buttons .btn {
+      .worker-cta-buttons .btn {
         width: 100%;
       }
       
       .app-buttons {
         flex-direction: column;
       }
-      /* Add to your existing CSS */
-.text-center {
-  text-align: center;
-}
-
-.mt-5 {
-  margin-top: 3rem;
-}
-
-.btn-lg {
-  padding: 12px 30px;
-  font-size: 1.1rem;
-  border-radius: 8px;
-}
-
-.ml-2 {
-  margin-left: 0.5rem;
-}
-
-/* If you want to match the existing button style */
-.btn-primary {
-  background: var(--gradient-primary);
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
-  text-decoration: none;
-  display: inline-block;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(249, 65, 68, 0.3);
-}
+      
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -1213,16 +1451,16 @@
   <!-- Header -->
   <header id="header">
     <div class="container header-container">
-      <div class="logo">
+      <a href="{{ url('/') }}" class="logo">
         <img src="{{ asset('images/kaajwala.png') }}" alt="KaajWala">
         <span class="logo-text">KaajWala</span>
-      </div>
+      </a>
       
       <button class="mobile-menu-btn" id="mobileMenuBtn">
         <i class="fas fa-bars"></i>
       </button>
       
-      <nav>
+      <nav id="nav">
         <ul class="nav-links">
           <li><a href="{{ url('/') }}"><i class="fas fa-home"></i> Home</a></li>
           
@@ -1238,7 +1476,7 @@
             </ul>
           </li>
           
-          <li><a href="{{ url('/providers') }}"><i class="fas fa-user-tie"></i> Service Providers</a></li>
+          <li><a href="{{ url('/providers') }}"><i class="fas fa-user-tie"></i> Providers</a></li>
           
           <li class="dropdown">
             <a href="#"><i class="fas fa-info-circle"></i> About <i class="fas fa-chevron-down"></i></a>
@@ -1253,22 +1491,27 @@
         </ul>
         
         <div class="nav-buttons">
-          <a href="{{ url('/login') }}" class="btn btn-outline">Login</a>    
+          <a href="{{ url('/login') }}" class="btn btn-outline">Login</a>
+          <a href="{{ url('/register') }}" class="btn btn-primary">Register</a>
         </div>
       </nav>
     </div>
   </header>
 
   <!-- Hero Section -->
- <section class="hero" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{ asset('images/wall.jpg') }}') no-repeat center center/cover;">
+  <section class="hero">
     <div class="container">
       <div class="hero-content">
         <h1>Professional Services At Your Doorstep</h1>
         <p>Find trusted professionals for all your home and office needs. Fast, reliable, and affordable services across Bangladesh.</p>
         
         <div class="hero-btns">
-          <a href="{{ url('/booking') }}" class="btn btn-primary">Book a Service Now</a>
-          <a href="{{ url('/providers') }}" class="btn btn-transparent">Become a Provider</a>
+          <a href="{{ url('/booking') }}" class="btn btn-primary">
+            <i class="fas fa-calendar-check"></i> Book a Service
+          </a>
+          <a href="{{ url('/providers') }}" class="btn btn-outline">
+            <i class="fas fa-user-tie"></i> Become a Provider
+          </a>
         </div>
         
         <div class="hero-stats">
@@ -1308,9 +1551,10 @@
         <img src="{{ asset('images/hero-service.png') }}" alt="Service Professionals">
       </div>
     </div>
-</section>
+  </section>
+
   <!-- Search Section -->
-<section class="search-section">
+  <section class="search-section">
     <div class="search-container">
       <div class="search-title">
         <h2>What Service Do You Need?</h2>
@@ -1338,7 +1582,7 @@
         
         <div class="search-input">
           <select id="service-type">
-            <option value="">Select Service Type</option>
+            <option value="">Service Category</option>
             <option value="home">Home Services</option>
             <option value="office">Office Services</option>
             <option value="emergency">Emergency Services</option>
@@ -1346,29 +1590,39 @@
           <i class="fas fa-tags"></i>
         </div>
         
-        <button type="submit" class="search-btn">Find Professionals <i class="fas fa-arrow-right"></i></button>
+        <button type="submit" class="search-btn">
+          Find Professionals <i class="fas fa-arrow-right"></i>
+        </button>
       </form>
     </div>
-</section>
-      
-<div class="services-grid">
-  <!-- Service 1 -->
-  <div class="service-card">
-    <div class="service-img">
-      <img src="{{ asset('images/electrician.png') }}" alt="Electrician">
-    </div>
-    <div class="service-content">
-      <span class="service-category">Electrical</span>
-      <h3 class="service-title">Electrician</h3>
-      <p class="service-description">Wiring, lighting, circuit repairs and all electrical installations by certified professionals.</p>
-      <div class="service-meta">
-        <span class="service-price">৳500-৳2000</span>
-        <span class="service-rating">
-          <i class="fas fa-star"></i> 4.9 (128)
-        </span>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Popular Services</h2>
+        <p>Quality services provided by verified professionals</p>
       </div>
-    </div>
-  </div>
+      
+      <div class="services-grid">
+        <!-- Service 1 -->
+        <div class="service-card">
+          <div class="service-img">
+            <img src="{{ asset('images/electrician.png') }}" alt="Electrician">
+          </div>
+          <div class="service-content">
+            <span class="service-category">Electrical</span>
+            <h3 class="service-title">Electrician Services</h3>
+            <p class="service-description">Wiring, lighting, circuit repairs and all electrical installations by certified professionals.</p>
+            <div class="service-meta">
+              <span class="service-price">৳500-৳2000</span>
+              <span class="service-rating">
+                <i class="fas fa-star"></i> 4.9 (128)
+              </span>
+            </div>
+          </div>
+        </div>
         
         <!-- Service 2 -->
         <div class="service-card">
@@ -1461,76 +1715,58 @@
         </div>
       </div>
       
-      <div class="button-container">
-        <style>
-          /* Button Container */
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 3rem 0;
-  width: 100%;
-}
+      <div class="view-all-btn">
+        <a href="{{ url('/services') }}" class="btn btn-primary">
+          View All Services <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
 
-/* Button Style */
-.button1 {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #FF6B35, #F94144);
-  color: white;
-  text-decoration: none;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(249, 65, 68, 0.3);
-  min-width: 250px;
-  text-align: center;
-}
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>Why Choose KaajWala</h2>
+        <p>We provide the best service experience for both customers and professionals</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 class="feature-title">Verified Professionals</h3>
+          <p class="feature-description">All our service providers are thoroughly vetted, trained and background checked for your safety.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3 class="feature-title">Quick Response</h3>
+          <p class="feature-description">Get connected with available professionals in your area within minutes, not days.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-tag"></i>
+          </div>
+          <h3 class="feature-title">Transparent Pricing</h3>
+          <p class="feature-description">Know the cost upfront with no hidden charges. Pay only when the job is completed to your satisfaction.</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3 class="feature-title">24/7 Support</h3>
+          <p class="feature-description">Our customer support team is available round the clock to assist you with any issues.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-/* Button Hover Effects */
-.button1:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(249, 65, 68, 0.4);
-  background: linear-gradient(135deg, #F94144, #FF6B35);
-}
-
-/* Button Active State */
-.button1:active {
-  transform: translateY(1px);
-}
-
-/* Icon Style */
-.button1 i {
-  margin-left: 0.8rem;
-  font-size: 1rem;
-  transition: transform 0.3s ease;
-}
-
-.button1:hover i {
-  transform: translateX(3px);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .button1 {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    min-width: 200px;
-  }
-}
-        </style>
-  <a href="{{ url('/services') }}" class="button1">
-    Explore All Services <i class="fas fa-arrow-right"></i>
-  </a>
-</div>
-
-</section>
   <!-- How It Works -->
   <section class="how-it-works">
     <div class="container">
@@ -1549,7 +1785,7 @@
               <i class="fas fa-search-location"></i>
             </div>
             <h3 class="step-title">Find a Service</h3>
-            <p class="step-description">Search for the service you need and browse through verified professionals in your area.</p>
+            <p class="step-description">Search for the service you need and browse through verified professionals in your area with ratings and reviews.</p>
           </div>
         </div>
         
@@ -1560,7 +1796,7 @@
               <i class="fas fa-calendar-check"></i>
             </div>
             <h3 class="step-title">Book an Appointment</h3>
-            <p class="step-description">Select your preferred time slot and book instantly with our easy online system.</p>
+            <p class="step-description">Select your preferred time slot and book instantly with our easy online system. Receive instant confirmation.</p>
           </div>
         </div>
         
@@ -1571,7 +1807,7 @@
               <i class="fas fa-user-cog"></i>
             </div>
             <h3 class="step-title">Get It Done</h3>
-            <p class="step-description">Our professional arrives on time and completes the job to your satisfaction.</p>
+            <p class="step-description">Our professional arrives on time with proper tools and completes the job to your satisfaction. Pay securely after service.</p>
           </div>
         </div>
       </div>
@@ -1590,7 +1826,7 @@
         <!-- Testimonial 1 -->
         <div class="testimonial-card">
           <div class="testimonial-text">
-            KaajWala saved me when my AC broke down in the middle of summer. Their technician arrived within 2 hours and fixed the issue professionally. Highly recommended!
+            KaajWala saved me when my AC broke down in the middle of summer. Their technician arrived within 2 hours and fixed the issue professionally. The pricing was transparent and the service was exceptional. Highly recommended!
           </div>
           <div class="testimonial-author">
             <div class="author-avatar">
@@ -1613,7 +1849,7 @@
         <!-- Testimonial 2 -->
         <div class="testimonial-card">
           <div class="testimonial-text">
-            I've used their cleaning service three times now and each time they've exceeded my expectations. The cleaners are thorough and pay attention to details.
+            I've used their cleaning service three times now and each time they've exceeded my expectations. The cleaners are thorough and pay attention to details I wouldn't even think of. The app makes scheduling so convenient!
           </div>
           <div class="testimonial-author">
             <div class="author-avatar">
@@ -1636,7 +1872,7 @@
         <!-- Testimonial 3 -->
         <div class="testimonial-card">
           <div class="testimonial-text">
-            As a busy professional, I don't have time to deal with home repairs. KaajWala has been a lifesaver - their electrician fixed my wiring issues in no time.
+            As a busy professional, I don't have time to deal with home repairs. KaajWala has been a lifesaver - their electrician fixed my wiring issues in no time. The best part? I didn't have to negotiate prices or worry about quality.
           </div>
           <div class="testimonial-author">
             <div class="author-avatar">
@@ -1687,50 +1923,50 @@
     </div>
   </section>
 
-  <!-- CTA Section -->
-<section class="worker-cta-section" style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; padding: 80px 0; text-align: center; color: white;">
-  <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-    <div class="worker-cta-content" style="max-width: 800px; margin: 0 auto;">
-      <h2 style="font-size: 2.5rem; margin-bottom: 20px; font-weight: 700;">Join Our Team of Professional Service Providers</h2>
-      <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9;">Earn competitive wages, set your own schedule, and be part of Bangladesh's most trusted home services platform.</p>
-      
-      <div class="worker-cta-buttons" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-        <a href="{{ url('/worker-register') }}" class="btn-worker-primary" style="background: #f96d00; color: white; padding: 15px 30px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; display: inline-block; border: 2px solid #f96d00;">
-          <i class="fas fa-user-plus" style="margin-right: 10px;"></i> Register as Worker
-        </a>
-        <a href="{{ url('/worker-benefits') }}" class="btn-worker-secondary" style="background: transparent; color: white; padding: 15px 30px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; display: inline-block; border: 2px solid white;">
-          <i class="fas fa-info-circle" style="margin-right: 10px;"></i> Learn More
-        </a>
-      </div>
+  <!-- Worker CTA Section -->
+  <section class="worker-cta-section">
+    <div class="container">
+      <div class="worker-cta-content">
+        <h2>Join Our Team of Professional Service Providers</h2>
+        <p>Earn competitive wages, set your own schedule, and be part of Bangladesh's most trusted home services platform.</p>
+        
+        <div class="worker-cta-buttons">
+          <a href="{{ url('/worker-register') }}" class="btn btn-worker-primary">
+            <i class="fas fa-user-plus"></i> Register as Worker
+          </a>
+          <a href="{{ url('/worker-benefits') }}" class="btn btn-worker-secondary">
+            <i class="fas fa-info-circle"></i> Learn More
+          </a>
+        </div>
 
-      <div class="worker-benefits" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 50px; text-align: left;">
-        <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; backdrop-filter: blur(5px);">
-          <div class="benefit-icon" style="font-size: 2rem; color: #f96d00; margin-bottom: 15px;">
-            <i class="fas fa-wallet"></i>
+        <div class="worker-benefits">
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <i class="fas fa-wallet"></i>
+            </div>
+            <h3>Competitive Earnings</h3>
+            <p>Keep up to 80% of your service fees with transparent pricing and regular bonuses for top-rated professionals.</p>
           </div>
-          <h3 style="margin-bottom: 10px;">Competitive Earnings</h3>
-          <p style="opacity: 0.9; font-size: 0.95rem;">Keep up to 80% of your service fees with transparent pricing.</p>
-        </div>
-        
-        <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; backdrop-filter: blur(5px);">
-          <div class="benefit-icon" style="font-size: 2rem; color: #f96d00; margin-bottom: 15px;">
-            <i class="fas fa-calendar-alt"></i>
+          
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3>Flexible Schedule</h3>
+            <p>Choose when you work and how many jobs you take. Perfect for both full-time professionals and side hustlers.</p>
           </div>
-          <h3 style="margin-bottom: 10px;">Flexible Schedule</h3>
-          <p style="opacity: 0.9; font-size: 0.95rem;">Choose when you work and how many jobs you take.</p>
-        </div>
-        
-        <div class="benefit-item" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; backdrop-filter: blur(5px);">
-          <div class="benefit-icon" style="font-size: 2rem; color: #f96d00; margin-bottom: 15px;">
-            <i class="fas fa-shield-alt"></i>
+          
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Job Security</h3>
+            <p>Regular work opportunities in your area with our growing customer base. No more worrying about finding clients.</p>
           </div>
-          <h3 style="margin-bottom: 10px;">Job Security</h3>
-          <p style="opacity: 0.9; font-size: 0.95rem;">Regular work opportunities in your area.</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- App Download -->
   <section class="app-download">
@@ -1742,7 +1978,7 @@
         
         <div class="app-content">
           <h2>Download Our Mobile App</h2>
-          <p>Get instant access to services, real-time tracking, exclusive offers and more with our user-friendly mobile application.</p>
+          <p>Get instant access to services, real-time tracking, exclusive offers and more with our user-friendly mobile application. Available for both iOS and Android devices.</p>
           
           <div class="app-buttons">
             <a href="#" class="app-btn">
@@ -1765,6 +2001,22 @@
       </div>
     </div>
   </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-content">
+        <h2>Stay Updated</h2>
+        <p>Subscribe to our newsletter for exclusive offers, service tips and updates.</p>
+        
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email address" class="newsletter-input" required>
+          <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
@@ -1774,7 +2026,7 @@
             <img src="{{ asset('images/kaajwala.png') }}" alt="KaajWala">
             <span class="footer-logo-text">KaajWala</span>
           </div>
-          <p>KaajWala is Bangladesh's leading service marketplace, connecting customers with verified professionals for all home and office needs.</p>
+          <p>KaajWala is Bangladesh's leading service marketplace, connecting customers with verified professionals for all home and office needs since 2023.</p>
           
           <div class="social-links">
             <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
@@ -1819,85 +2071,73 @@
       </div>
       
       <div class="footer-bottom">
-        <p>&copy; 2025 KaajWala. All Rights Reserved. | <a href="{{ url('/privacy') }}" style="color: rgba(255,255,255,0.6);">Privacy Policy</a> | <a href="{{ url('/terms') }}" style="color: rgba(255,255,255,0.6);">Terms of Service</a></p>
+        <p>&copy; 2025 KaajWala. All Rights Reserved. | <a href="{{ url('/privacy') }}">Privacy Policy</a> | <a href="{{ url('/terms') }}">Terms of Service</a></p>
       </div>
     </div>
   </footer>
 
-  <script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const header = document.getElementById('header');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const nav = document.getElementById('nav');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
     // Header scroll effect
-    window.addEventListener('scroll', function() {
-      const header = document.getElementById('header');
+    window.addEventListener('scroll', function () {
       if (window.scrollY > 50) {
         header.classList.add('scrolled');
       } else {
         header.classList.remove('scrolled');
       }
     });
-    
-    // Mobile menu toggle
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const nav = document.querySelector('nav');
-    
-    mobileMenuBtn.addEventListener('click', function() {
-      nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
-    });
-    
-    // Responsive adjustments
-    function handleResize() {
-      if (window.innerWidth > 768) {
-        nav.style.display = '';
-      }
-    }
-    
-    window.addEventListener('resize', handleResize);
-    // Add this script for dynamic functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const serviceSearch = document.getElementById('service-search');
-  const serviceSuggestions = document.getElementById('service-suggestions');
-  
-  // Sample services data - replace with your actual data
-  const services = [
-    "Electrician", "Plumber", "Cleaner", "AC Repair", 
-    "Painter", "Movers", "Carpenter", "Mechanic",
-    "Gardener", "Pest Control", "Appliance Repair", "Tailor"
-  ];
-  
-  // Dynamic search suggestions
-  serviceSearch.addEventListener('input', function() {
-    const input = this.value.toLowerCase();
-    if (input.length > 1) {
-      const matches = services.filter(service => 
-        service.toLowerCase().includes(input)
-      );
-      
-      if (matches.length > 0) {
-        serviceSuggestions.innerHTML = matches.map(service => 
-          `<div onclick="selectService('${service}')">${service}</div>`
-        ).join('');
-        serviceSuggestions.classList.add('show');
-      } else {
-        serviceSuggestions.innerHTML = '<div>No matching services found</div>';
-        serviceSuggestions.classList.add('show');
-      }
-    } else {
-      serviceSuggestions.classList.remove('show');
-    }
-  });
-  
-  // Close suggestions when clicking outside
-  document.addEventListener('click', function(e) {
-    if (!serviceSearch.contains(e.target) && !serviceSuggestions.contains(e.target)) {
-      serviceSuggestions.classList.remove('show');
-    }
-  });
-});
 
-function selectService(service) {
-  document.getElementById('service-search').value = service;
-  document.getElementById('service-suggestions').classList.remove('show');
-}
-  </script>
+    // Mobile menu toggle
+    mobileMenuBtn.addEventListener('click', function () {
+      nav.classList.toggle('active');
+    });
+
+    // Close mobile nav when clicking outside
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        nav.classList.remove('active');
+      }
+    });
+
+    // Mobile dropdown functionality
+    dropdowns.forEach(dropdown => {
+      const link = dropdown.querySelector('a');
+      const menu = dropdown.querySelector('.dropdown-menu');
+
+      link.addEventListener('click', function (e) {
+        if (window.innerWidth <= 992) {
+          e.preventDefault();
+          menu.classList.toggle('show');
+
+          // Close other dropdowns
+          dropdowns.forEach(other => {
+            if (other !== dropdown) {
+              const otherMenu = other.querySelector('.dropdown-menu');
+              otherMenu.classList.remove('show');
+            }
+          });
+        }
+      });
+    });
+
+    // Responsive reset on resize
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 992) {
+        nav.classList.remove('active');
+        dropdowns.forEach(dropdown => {
+          const menu = dropdown.querySelector('.dropdown-menu');
+          menu.classList.remove('show');
+        });
+      }
+    });
+  });
+</script>
+
   @include('chatbot')
 </body>
 </html>
