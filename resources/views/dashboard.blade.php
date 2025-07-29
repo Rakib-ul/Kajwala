@@ -9,15 +9,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     :root {
-      --primary: #f96d00;
-      --primary-dark: #e05e00;
-      --secondary: #393e46;
-      --light: #f9f9f9;
-      --dark: #222831;
+      --primary: #5a67d8;
+      --primary-dark: #4c51bf;
+      --secondary: #4a5568;
+      --light: #f7fafc;
+      --dark: #2d3748;
       --white: #ffffff;
-      --gray: #eeeeee;
-      --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      --transition: all 0.3s ease;
+      --gray: #e2e8f0;
+      --success: #48bb78;
+      --warning: #ed8936;
+      --danger: #f56565;
+      --info: #4299e1;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     * {
@@ -45,81 +50,89 @@
     img {
       max-width: 100%;
       height: auto;
+      display: block;
     }
     
     .container {
       width: 100%;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 0 20px;
     }
     
     /* Header Styles */
     .main-header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: var(--white);
-      padding: 20px 0;
-      position: relative;
-      overflow: hidden;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
     
     .header-content {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      position: relative;
-      z-index: 2;
     }
     
     .logo {
-      height: 50px;
-      margin-bottom: 15px;
+      height: 40px;
     }
     
-    .main-header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-      font-weight: 700;
-    }
-    
-    /* Main Navigation */
-    .main-nav {
-      width: 100%;
-      margin-top: 15px;
-    }
-    
-    .nav-links {
+    .user-menu {
       display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .user-menu .notification {
+      position: relative;
+      color: var(--secondary);
+      font-size: 1.2rem;
+    }
+    
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--danger);
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 5px;
     }
     
-    .nav-links a {
-      color: var(--white);
-      font-weight: 500;
-      padding: 8px 15px;
-      border-radius: 30px;
-      transition: var(--transition);
-      font-size: 0.95rem;
-    }
-    
-    .nav-links a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
-    }
-    
-    .nav-links a.active {
-      background: var(--white);
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--primary);
+      cursor: pointer;
+      overflow: hidden;
+    }
+    
+    .user-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     
     /* Dashboard Layout */
     .dashboard-container {
       display: grid;
-      grid-template-columns: 250px 1fr;
+      grid-template-columns: 280px 1fr;
       gap: 30px;
       padding: 30px 0;
+      min-height: calc(100vh - 70px);
     }
     
     /* Sidebar */
@@ -127,18 +140,21 @@
       background: var(--white);
       border-radius: 10px;
       box-shadow: var(--shadow);
-      padding: 20px;
-      height: fit-content;
+      padding: 25px 0;
+      height: 100%;
+      position: sticky;
+      top: 90px;
     }
     
     .user-profile {
       text-align: center;
       margin-bottom: 30px;
+      padding: 0 25px;
     }
     
-    .user-avatar {
-      width: 80px;
-      height: 80px;
+    .user-avatar-large {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       background: var(--gray);
       margin: 0 auto 15px;
@@ -147,15 +163,18 @@
       justify-content: center;
       font-size: 2rem;
       color: var(--primary);
+      overflow: hidden;
     }
     
     .user-name {
       font-weight: 600;
       margin-bottom: 5px;
+      font-size: 1.1rem;
     }
     
     .user-email {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      color: var(--secondary);
       opacity: 0.8;
     }
     
@@ -164,26 +183,31 @@
     }
     
     .nav-item {
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
     
     .nav-link {
       display: flex;
       align-items: center;
-      padding: 10px;
-      border-radius: 6px;
+      padding: 12px 25px;
+      border-radius: 0;
       transition: var(--transition);
+      font-weight: 500;
+      color: var(--secondary);
+      border-left: 3px solid transparent;
     }
     
     .nav-link:hover, .nav-link.active {
-      background: rgba(249, 109, 0, 0.1);
+      background: rgba(90, 103, 216, 0.05);
       color: var(--primary);
+      border-left: 3px solid var(--primary);
     }
     
     .nav-link i {
-      margin-right: 10px;
+      margin-right: 12px;
       width: 20px;
       text-align: center;
+      font-size: 1.1rem;
     }
     
     /* Main Content */
@@ -202,8 +226,7 @@
     }
     
     .dashboard-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-lg);
     }
     
     .card-header {
@@ -211,11 +234,17 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--gray);
     }
     
     .card-header h2 {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       color: var(--primary);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     
     .card-header .btn {
@@ -223,32 +252,95 @@
       font-size: 0.9rem;
     }
     
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+    
+    .stat-icon.primary {
+      background: rgba(90, 103, 216, 0.1);
+      color: var(--primary);
+    }
+    
+    .stat-icon.success {
+      background: rgba(72, 187, 120, 0.1);
+      color: var(--success);
+    }
+    
+    .stat-icon.warning {
+      background: rgba(237, 137, 54, 0.1);
+      color: var(--warning);
+    }
+    
+    .stat-icon.danger {
+      background: rgba(245, 101, 101, 0.1);
+      color: var(--danger);
+    }
+    
+    .stat-info h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .stat-info p {
+      font-size: 0.9rem;
+      color: var(--secondary);
+      opacity: 0.8;
+    }
+    
     /* Location Section */
     .location-form {
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 10px;
+      margin-bottom: 20px;
     }
     
     .form-control {
       width: 100%;
       padding: 12px 15px;
-      border: 1px solid #ddd;
+      border: 1px solid var(--gray);
       border-radius: 6px;
       font-family: 'Poppins', sans-serif;
       transition: var(--transition);
+      background: var(--light);
     }
     
     .form-control:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(249, 109, 0, 0.1);
+      box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.1);
+      background: var(--white);
     }
     
     /* Services Section */
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 15px;
       margin-top: 20px;
     }
@@ -256,17 +348,20 @@
     .service-card {
       border: 1px solid var(--gray);
       border-radius: 8px;
-      padding: 15px;
+      padding: 20px 15px;
       transition: var(--transition);
       cursor: pointer;
+      text-align: center;
+      background: var(--light);
     }
     
     .service-card:hover {
       border-color: var(--primary);
+      transform: translateY(-3px);
     }
     
     .service-card.selected {
-      background: rgba(249, 109, 0, 0.1);
+      background: rgba(90, 103, 216, 0.1);
       border-color: var(--primary);
     }
     
@@ -275,19 +370,27 @@
     }
     
     .service-icon {
-      width: 40px;
-      height: 40px;
-      background: rgba(249, 109, 0, 0.1);
+      width: 50px;
+      height: 50px;
+      background: rgba(90, 103, 216, 0.1);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--primary);
-      margin-bottom: 10px;
+      margin: 0 auto 15px;
+      font-size: 1.3rem;
     }
     
     .service-name {
       font-weight: 500;
+      margin-bottom: 5px;
+    }
+    
+    .service-price {
+      font-size: 0.9rem;
+      color: var(--success);
+      font-weight: 600;
     }
     
     /* Recent Requests */
@@ -305,11 +408,14 @@
     .requests-table th {
       font-weight: 600;
       color: var(--primary);
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
     }
     
     .status {
       display: inline-block;
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 20px;
       font-size: 0.8rem;
       font-weight: 500;
@@ -330,24 +436,32 @@
       color: #004085;
     }
     
+    .status-cancelled {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
     /* Buttons */
     .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: var(--primary);
       color: var(--white);
       border: none;
-      padding: 12px 25px;
-      border-radius: 30px;
+      padding: 10px 20px;
+      border-radius: 6px;
       cursor: pointer;
       font-weight: 500;
       transition: var(--transition);
-      text-align: center;
+      gap: 8px;
+      font-size: 0.95rem;
     }
     
     .btn:hover {
       background: var(--primary-dark);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(249, 109, 0, 0.3);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
     }
     
     .btn-outline {
@@ -361,12 +475,25 @@
       color: var(--white);
     }
     
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
+    
     .btn-danger {
-      background: #dc3545;
+      background: var(--danger);
     }
     
     .btn-danger:hover {
-      background: #c82333;
+      background: #e53e3e;
+    }
+    
+    .btn-success {
+      background: var(--success);
+    }
+    
+    .btn-success:hover {
+      background: #38a169;
     }
     
     /* Footer */
@@ -385,9 +512,9 @@
     }
     
     .footer-column h3 {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       margin-bottom: 20px;
-      color: var(--primary);
+      color: var(--white);
     }
     
     .footer-column p, .footer-column a {
@@ -395,11 +522,12 @@
       margin-bottom: 10px;
       display: block;
       transition: var(--transition);
+      font-size: 0.95rem;
     }
     
     .footer-column a:hover {
       opacity: 1;
-      color: var(--primary);
+      color: var(--white);
       padding-left: 5px;
     }
     
@@ -434,22 +562,54 @@
     }
     
     /* Responsive Adjustments */
+    @media (max-width: 1200px) {
+      .container {
+        max-width: 100%;
+        padding: 0 15px;
+      }
+    }
+    
     @media (max-width: 992px) {
       .dashboard-container {
         grid-template-columns: 1fr;
       }
       
-      .services-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      .sidebar {
+        position: static;
+        margin-bottom: 30px;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
     
     @media (max-width: 768px) {
-      .main-header h1 {
-        font-size: 1.6rem;
+      .header-content {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .user-menu {
+        width: 100%;
+        justify-content: space-between;
       }
       
       .location-form {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .services-grid {
         grid-template-columns: 1fr;
       }
       
@@ -457,56 +617,24 @@
         display: block;
         overflow-x: auto;
       }
-      
-      .nav-links {
-        gap: 3px;
-      }
-      
-      .nav-links a {
-        padding: 6px 12px;
-        font-size: 0.85rem;
-      }
-    }
-    
-    @media (max-width: 576px) {
-      .main-header h1 {
-        font-size: 1.5rem;
-      }
-      
-      .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .nav-links {
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
-      }
-      
-      .nav-links a {
-        width: 100%;
-        text-align: center;
-      }
     }
   </style>
 </head>
 <body>
+  <!-- Header with User Menu -->
   <header class="main-header">
     <div class="container header-content">
       <img src="{{ asset('images/kaajwala.png') }}" alt="KaajWala Logo" class="logo">
-      <h1>Welcome to Your Dashboard</h1>
       
-      <!-- Main Navigation Bar -->
-      <nav class="main-nav">
-        <ul class="nav-links">
-          <li><a href="{{ url('/') }}">Home</a></li>
-          <li><a href="{{ url('/about') }}">About</a></li>
-          <li><a href="{{ url('/services') }}">Services</a></li>
-          <li><a href="{{ url('/contact') }}">Contact</a></li>
-          <li><a href="{{ url('/portfolio') }}" class="active">Portfolio</a></li>
-          <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-        </ul>
-      </nav>
+      <div class="user-menu">
+        <a href="#" class="notification">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge">3</span>
+        </a>
+        <div class="user-avatar">
+          <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=5a67d8&color=fff" alt="User Avatar">
+        </div>
+      </div>
     </div>
   </header>
 
@@ -514,8 +642,8 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="user-profile">
-        <div class="user-avatar">
-          <i class="fas fa-user"></i>
+        <div class="user-avatar-large">
+          <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=5a67d8&color=fff&size=100" alt="User Avatar">
         </div>
         <h3 class="user-name">{{ auth()->user()->name }}</h3>
         <p class="user-email">{{ auth()->user()->email }}</p>
@@ -551,6 +679,13 @@
             <a href="{{ url('/messages') }}" class="nav-link">
               <i class="fas fa-comments"></i>
               <span>Messages</span>
+              <span class="notification-badge" style="position: static; margin-left: auto;">2</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('/payments') }}" class="nav-link">
+              <i class="fas fa-credit-card"></i>
+              <span>Payments</span>
             </a>
           </li>
           <li class="nav-item">
@@ -574,18 +709,63 @@
 
     <!-- Main Content -->
     <main class="main-content">
+      <!-- Stats Overview -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon primary">
+            <i class="fas fa-tools"></i>
+          </div>
+          <div class="stat-info">
+            <h3>12</h3>
+            <p>Total Services</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon success">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-info">
+            <h3>8</h3>
+            <p>Completed</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon warning">
+            <i class="fas fa-spinner"></i>
+          </div>
+          <div class="stat-info">
+            <h3>3</h3>
+            <p>In Progress</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon danger">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <div class="stat-info">
+            <h3>1</h3>
+            <p>Cancelled</p>
+          </div>
+        </div>
+      </div>
+      
       <!-- Request Services Card -->
       <div class="dashboard-card">
         <div class="card-header">
-          <h2><i class="fas fa-map-marker-alt"></i> Request Services</h2>
+          <h2><i class="fas fa-plus-circle"></i> Request New Service</h2>
         </div>
         <form id="location-form" class="location-form">
           <input type="text" id="location" class="form-control" placeholder="Enter your area (e.g., Mirpur 1)" required>
-          <button type="submit" class="btn">Find Services</button>
+          <button type="submit" class="btn">
+            <i class="fas fa-search"></i> Find Services
+          </button>
         </form>
         
         <div id="services-section" style="display: none; margin-top: 30px;">
-          <h3>Available Services in <span id="user-location"></span></h3>
+          <h3 style="margin-bottom: 20px;">Available Services in <span id="user-location" style="color: var(--primary);"></span></h3>
           <form id="services-form" action="{{ url('/select-workers') }}" method="GET">
             <input type="text" id="service-search" class="form-control" placeholder="Search services..." style="margin-bottom: 20px;">
             
@@ -596,6 +776,7 @@
                   <i class="fas fa-bolt"></i>
                 </div>
                 <div class="service-name">Electrician</div>
+                <div class="service-price">৳500-৳1500</div>
               </label>
               
               <label class="service-card">
@@ -604,6 +785,7 @@
                   <i class="fas fa-faucet"></i>
                 </div>
                 <div class="service-name">Plumber</div>
+                <div class="service-price">৳400-৳1200</div>
               </label>
               
               <label class="service-card">
@@ -612,6 +794,7 @@
                   <i class="fas fa-broom"></i>
                 </div>
                 <div class="service-name">Cleaner</div>
+                <div class="service-price">৳300-৳800</div>
               </label>
               
               <label class="service-card">
@@ -620,6 +803,7 @@
                   <i class="fas fa-paint-roller"></i>
                 </div>
                 <div class="service-name">Painter</div>
+                <div class="service-price">৳600-৳2000</div>
               </label>
               
               <label class="service-card">
@@ -628,6 +812,7 @@
                   <i class="fas fa-hammer"></i>
                 </div>
                 <div class="service-name">Carpenter</div>
+                <div class="service-price">৳500-৳1800</div>
               </label>
               
               <label class="service-card">
@@ -636,6 +821,7 @@
                   <i class="fas fa-snowflake"></i>
                 </div>
                 <div class="service-name">AC Technician</div>
+                <div class="service-price">৳800-৳2500</div>
               </label>
             </div>
             
@@ -650,7 +836,9 @@
       <div class="dashboard-card">
         <div class="card-header">
           <h2><i class="fas fa-clock"></i> Recent Service Requests</h2>
-          <a href="{{ url('/service-history') }}" class="btn btn-outline">View All</a>
+          <a href="{{ url('/service-history') }}" class="btn btn-outline btn-sm">
+            <i class="fas fa-list"></i> View All
+          </a>
         </div>
         
         <div class="table-responsive">
@@ -660,6 +848,7 @@
                 <th>Service</th>
                 <th>Date</th>
                 <th>Worker</th>
+                <th>Amount</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -669,47 +858,40 @@
                 <td>Electrician</td>
                 <td>15 Jun 2023</td>
                 <td>Md. Rahman</td>
+                <td>৳1200</td>
                 <td><span class="status status-completed">Completed</span></td>
-                <td><a href="{{ url('/request-details/1') }}" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.8rem;">Details</a></td>
+                <td>
+                  <a href="{{ url('/request-details/1') }}" class="btn btn-outline btn-sm">
+                    <i class="fas fa-eye"></i> View
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>Plumber</td>
                 <td>10 Jun 2023</td>
                 <td>Abdul Karim</td>
+                <td>৳800</td>
                 <td><span class="status status-processing">In Progress</span></td>
-                <td><a href="{{ url('/request-details/2') }}" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.8rem;">Details</a></td>
+                <td>
+                  <a href="{{ url('/request-details/2') }}" class="btn btn-outline btn-sm">
+                    <i class="fas fa-eye"></i> View
+                  </a>
+                </td>
               </tr>
               <tr>
                 <td>Cleaner</td>
                 <td>05 Jun 2023</td>
                 <td>Fatima Begum</td>
+                <td>৳500</td>
                 <td><span class="status status-pending">Pending</span></td>
-                <td><a href="{{ url('/request-details/3') }}" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.8rem;">Details</a></td>
+                <td>
+                  <a href="{{ url('/request-details/3') }}" class="btn btn-outline btn-sm">
+                    <i class="fas fa-eye"></i> View
+                  </a>
+                </td>
               </tr>
             </tbody>
           </table>
-        </div>
-      </div>
-      
-      <!-- Quick Actions Card -->
-      <div class="dashboard-card">
-        <div class="card-header">
-          <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
-        </div>
-        
-        <div class="quick-actions" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px;">
-          <a href="{{ url('/services') }}" class="btn btn-outline">
-            <i class="fas fa-plus"></i> New Request
-          </a>
-          <a href="{{ url('/bookings') }}" class="btn btn-outline">
-            <i class="fas fa-calendar"></i> Schedule
-          </a>
-          <a href="{{ url('/profile') }}" class="btn btn-outline">
-            <i class="fas fa-user-edit"></i> Edit Profile
-          </a>
-          <a href="{{ url('/contact') }}" class="btn btn-outline">
-            <i class="fas fa-question-circle"></i> Help
-          </a>
         </div>
       </div>
     </main>
@@ -735,7 +917,7 @@
           <a href="{{ url('/about') }}">About Us</a>
           <a href="{{ url('/services') }}">Services</a>
           <a href="{{ url('/contact') }}">Contact</a>
-          <a href="{{ url('/portfolio') }}">Portfolio</a>
+          <a href="{{ url('/faq') }}">FAQ</a>
         </div>
         
         <div class="footer-column">
@@ -746,10 +928,12 @@
         </div>
         
         <div class="footer-column">
-          <h3>Working Hours</h3>
-          <p>Saturday to Saturday</p>
-          <p>9:00 AM - 9:00 PM</p>
-          <p>Emergency services available 24/7</p>
+          <h3>Newsletter</h3>
+          <p>Subscribe to get updates on new services and offers.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your Email" class="form-control" style="margin-bottom: 10px;">
+            <button type="submit" class="btn btn-sm">Subscribe</button>
+          </form>
         </div>
       </div>
       
@@ -821,7 +1005,7 @@
       
       // Set active nav link based on current page
       const currentPage = window.location.pathname;
-      const navLinks = document.querySelectorAll('.nav-links a');
+      const navLinks = document.querySelectorAll('.nav-link');
       navLinks.forEach(link => {
         if (link.getAttribute('href') === currentPage) {
           link.classList.add('active');
