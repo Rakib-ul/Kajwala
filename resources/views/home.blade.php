@@ -11,6 +11,7 @@
     :root {
       --primary: #FF6B35;
       --primary-dark: #F94144;
+      --primary-light: rgba(255, 107, 53, 0.1);
       --secondary: #25CED1;
       --accent: #FCE38A;
       --dark: #292F36;
@@ -27,6 +28,7 @@
       --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
       --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       --border-radius: 12px;
+      --nav-height: 80px;
     }
     
     * {
@@ -42,6 +44,7 @@
       line-height: 1.6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      padding-top: var(--nav-height);
     }
     
     .container {
@@ -50,7 +53,7 @@
       padding: 0 20px;
     }
     
-    /* Header & Navigation */
+    /* Header & Navigation - Redesigned */
     header {
       position: fixed;
       top: 0;
@@ -62,23 +65,31 @@
       backdrop-filter: blur(10px);
       box-shadow: var(--shadow-sm);
       border-bottom: 1px solid rgba(0,0,0,0.05);
+      height: var(--nav-height);
     }
     
     header.scrolled {
       box-shadow: var(--shadow-md);
+      height: 70px;
+    }
+    
+    header.scrolled .logo img {
+      height: 35px;
     }
     
     .header-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 0;
+      height: 100%;
+      padding: 0 20px;
     }
     
     .logo {
       display: flex;
       align-items: center;
       text-decoration: none;
+      transition: var(--transition);
     }
     
     .logo img {
@@ -97,36 +108,60 @@
       letter-spacing: -0.5px;
     }
     
-    nav {
+    /* Main Navigation */
+    .main-nav {
       display: flex;
       align-items: center;
+      height: 100%;
     }
     
     .nav-links {
       display: flex;
       list-style: none;
+      height: 100%;
+      margin-right: 20px;
     }
     
-    .nav-links li {
+    .nav-links > li {
       position: relative;
-      margin: 0 8px;
+      height: 100%;
+      display: flex;
+      align-items: center;
     }
     
-    .nav-links a {
+    .nav-links > li > a {
       color: var(--dark);
       text-decoration: none;
       font-weight: 500;
       font-size: 0.95rem;
-      padding: 10px 15px;
-      border-radius: var(--border-radius);
+      padding: 0 15px;
+      height: 100%;
       display: flex;
       align-items: center;
       transition: var(--transition);
+      position: relative;
     }
     
-    .nav-links a:hover {
+    .nav-links > li > a:hover {
       color: var(--primary);
-      background: rgba(255, 107, 53, 0.1);
+    }
+    
+    .nav-links > li > a:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background: var(--gradient-primary);
+      transition: var(--transition);
+      border-radius: 3px 3px 0 0;
+    }
+    
+    .nav-links > li > a:hover:after,
+    .nav-links > li > a.active:after {
+      width: 100%;
     }
     
     .nav-links a i {
@@ -134,8 +169,10 @@
       font-size: 0.9rem;
     }
     
+    /* Dropdown Menu - Redesigned */
     .dropdown {
       position: relative;
+      height: 100%;
     }
     
     .dropdown-menu {
@@ -144,7 +181,7 @@
       left: 0;
       width: 220px;
       background: white;
-      border-radius: var(--border-radius);
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
       box-shadow: var(--shadow-lg);
       padding: 10px 0;
       opacity: 0;
@@ -165,20 +202,31 @@
     }
     
     .dropdown-menu a {
-      padding: 10px 20px;
+      padding: 12px 20px;
       color: var(--gray);
       font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
     }
     
     .dropdown-menu a:hover {
       color: var(--primary);
-      background: rgba(255, 107, 53, 0.05);
+      background: var(--primary-light);
+      padding-left: 25px;
     }
     
+    .dropdown-menu a i {
+      font-size: 0.8rem;
+      width: 20px;
+      text-align: center;
+    }
+    
+    /* Navigation Buttons - Redesigned */
     .nav-buttons {
       display: flex;
       align-items: center;
-      margin-left: 20px;
+      gap: 15px;
     }
     
     .btn {
@@ -212,14 +260,14 @@
       background: transparent;
       color: var(--primary);
       border: 1px solid var(--primary);
-      margin-right: 10px;
     }
     
     .btn-outline:hover {
-      background: rgba(255, 107, 53, 0.1);
+      background: var(--primary-light);
       transform: translateY(-2px);
     }
     
+    /* Mobile Menu Button - Redesigned */
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -230,18 +278,176 @@
       padding: 10px;
       border-radius: 50%;
       transition: var(--transition);
+      position: relative;
+      width: 40px;
+      height: 40px;
+      z-index: 1001;
     }
     
     .mobile-menu-btn:hover {
-      background: rgba(0,0,0,0.05);
+      background: var(--primary-light);
     }
     
-    /* Hero Section */
+    .mobile-menu-btn .hamburger {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 2px;
+      background: var(--dark);
+      transition: var(--transition);
+    }
+    
+    .mobile-menu-btn .hamburger:before,
+    .mobile-menu-btn .hamburger:after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background: var(--dark);
+      transition: var(--transition);
+    }
+    
+    .mobile-menu-btn .hamburger:before {
+      transform: translateY(-8px);
+    }
+    
+    .mobile-menu-btn .hamburger:after {
+      transform: translateY(8px);
+    }
+    
+    .mobile-menu-btn.active .hamburger {
+      background: transparent;
+    }
+    
+    .mobile-menu-btn.active .hamburger:before {
+      transform: rotate(45deg);
+    }
+    
+    .mobile-menu-btn.active .hamburger:after {
+      transform: rotate(-45deg);
+    }
+    
+    /* Mobile Navigation - Redesigned */
+    @media (max-width: 992px) {
+      .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 320px;
+        height: 100vh;
+        background: white;
+        box-shadow: var(--shadow-lg);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 100px 30px 30px;
+        transition: var(--transition);
+        z-index: 1000;
+      }
+      
+      .main-nav.active {
+        right: 0;
+      }
+      
+      .nav-links {
+        flex-direction: column;
+        width: 100%;
+        margin-right: 0;
+        height: auto;
+      }
+      
+      .nav-links > li {
+        height: auto;
+        width: 100%;
+        margin: 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+      
+      .nav-links > li > a {
+        padding: 15px 0;
+        height: auto;
+        width: 100%;
+      }
+      
+      .nav-links > li > a:after {
+        display: none;
+      }
+      
+      .dropdown {
+        height: auto;
+      }
+      
+      .dropdown-menu {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+      }
+      
+      .dropdown.active .dropdown-menu {
+        max-height: 500px;
+        padding: 10px 0 10px 20px;
+      }
+      
+      .dropdown-menu a {
+        padding: 10px 0;
+      }
+      
+      .dropdown-menu a:hover {
+        padding-left: 10px;
+      }
+      
+      .nav-buttons {
+        width: 100%;
+        margin-top: 30px;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .nav-buttons .btn {
+        width: 100%;
+      }
+      
+      /* Overlay for mobile menu */
+      .nav-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        backdrop-filter: blur(5px);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+      }
+      
+      .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+    
+    /* Hero Section - Redesigned */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 150px 0 80px;
+      padding: 80px 0;
       position: relative;
       overflow: hidden;
       background: linear-gradient(135deg, rgba(41,47,54,0.95) 0%, rgba(65,72,82,0.95) 100%), url('{{ asset('images/hero-bg.jpg') }}') no-repeat center center/cover;
@@ -261,7 +467,6 @@
       line-height: 1.2;
       margin-bottom: 20px;
       font-family: 'Montserrat', sans-serif;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     
     .hero p {
@@ -342,7 +547,7 @@
       100% { transform: translateY(0px); }
     }
     
-    /* Search Section */
+    /* Search Section - Redesigned */
     .search-section {
       background: white;
       padding: 60px 0;
@@ -479,7 +684,7 @@
       color: var(--primary);
     }
     
-    /* Services Section */
+    /* Services Section - Redesigned */
     .services {
       padding: 100px 0;
       background: white;
@@ -622,7 +827,7 @@
       min-width: 250px;
     }
     
-    /* Features Section */
+    /* Features Section - Redesigned */
     .features {
       padding: 100px 0;
       background: var(--light-gray);
@@ -676,7 +881,7 @@
       line-height: 1.6;
     }
     
-    /* How It Works */
+    /* How It Works - Redesigned */
     .how-it-works {
       padding: 100px 0;
       background: white;
@@ -761,7 +966,7 @@
       z-index: 0;
     }
     
-    /* Testimonials */
+    /* Testimonials - Redesigned */
     .testimonials {
       padding: 100px 0;
       background: linear-gradient(135deg, rgba(41,47,54,0.95) 0%, rgba(65,72,82,0.95) 100%), url('{{ asset('images/testimonial-bg.jpg') }}') no-repeat center center/cover;
@@ -854,7 +1059,7 @@
       font-size: 0.9rem;
     }
     
-    /* Partners */
+    /* Partners - Redesigned */
     .partners {
       padding: 80px 0;
       background: white;
@@ -887,7 +1092,7 @@
       object-fit: contain;
     }
     
-    /* Worker CTA Section */
+    /* Worker CTA Section - Redesigned */
     .worker-cta-section {
       padding: 100px 0;
       background: linear-gradient(135deg, rgba(41,47,54,0.95) 0%, rgba(65,72,82,0.95) 100%), url('{{ asset('images/workers-bg.jpg') }}') no-repeat center center/cover;
@@ -993,7 +1198,7 @@
       line-height: 1.6;
     }
     
-    /* App Download */
+    /* App Download - Redesigned */
     .app-download {
       padding: 100px 0;
       background: white;
@@ -1080,7 +1285,7 @@
       box-shadow: var(--shadow-lg);
     }
     
-    /* Newsletter */
+    /* Newsletter - Redesigned */
     .newsletter {
       padding: 80px 0;
       background: var(--gradient-primary);
@@ -1151,7 +1356,7 @@
       background: #1a1f24;
     }
     
-    /* Footer */
+    /* Footer - Redesigned */
     .footer {
       background: var(--dark);
       color: white;
@@ -1290,7 +1495,7 @@
       color: var(--primary);
     }
     
-    /* Responsive Styles */
+    /* Responsive Styles - Enhanced */
     @media (max-width: 1200px) {
       .hero h1 {
         font-size: 3rem;
@@ -1347,14 +1552,6 @@
     }
     
     @media (max-width: 768px) {
-      .mobile-menu-btn {
-        display: block;
-      }
-      
-      .nav-links, .nav-buttons {
-        display: none;
-      }
-      
       .hero {
         padding: 120px 0 60px;
         text-align: center;
@@ -1407,6 +1604,10 @@
     }
     
     @media (max-width: 576px) {
+      :root {
+        --nav-height: 70px;
+      }
+      
       .hero h1 {
         font-size: 2.2rem;
       }
@@ -1448,7 +1649,7 @@
   </style>
 </head>
 <body>
-  <!-- Header -->
+  <!-- Header - Redesigned -->
   <header id="header">
     <div class="container header-container">
       <a href="{{ url('/') }}" class="logo">
@@ -1457,12 +1658,14 @@
       </a>
       
       <button class="mobile-menu-btn" id="mobileMenuBtn">
-        <i class="fas fa-bars"></i>
+        <span class="hamburger"></span>
       </button>
       
-      <nav id="nav">
+      <div class="nav-overlay" id="navOverlay"></div>
+      
+      <nav class="main-nav" id="mainNav">
         <ul class="nav-links">
-          <li><a href="{{ url('/') }}"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="{{ url('/') }}" class="active"><i class="fas fa-home"></i> Home</a></li>
           
           <li class="dropdown">
             <a href="{{ url('/services') }}"><i class="fas fa-tools"></i> Services <i class="fas fa-chevron-down"></i></a>
@@ -1492,112 +1695,312 @@
         
         <div class="nav-buttons">
           <a href="{{ url('/login') }}" class="btn btn-outline">Login</a>
-          <a href="{{ url('/register') }}" class="btn btn-primary">Register</a>
         </div>
       </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <h1>Professional Services At Your Doorstep</h1>
-        <p>Find trusted professionals for all your home and office needs. Fast, reliable, and affordable services across Bangladesh.</p>
-        
-        <div class="hero-btns">
-          <a href="{{ url('/booking') }}" class="btn btn-primary">
-            <i class="fas fa-calendar-check"></i> Book a Service
-          </a>
-          <a href="{{ url('/providers') }}" class="btn btn-outline">
-            <i class="fas fa-user-tie"></i> Become a Provider
-          </a>
-        </div>
-        
-        <div class="hero-stats">
-          <div class="stat-item">
-            <div class="stat-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <div class="stat-text">
-              <h3>5,000+</h3>
-              <p>Happy Customers</p>
-            </div>
-          </div>
-          
-          <div class="stat-item">
-            <div class="stat-icon">
-              <i class="fas fa-user-cog"></i>
-            </div>
-            <div class="stat-text">
-              <h3>1,200+</h3>
-              <p>Verified Providers</p>
-            </div>
-          </div>
-          
-          <div class="stat-item">
-            <div class="stat-icon">
-              <i class="fas fa-map-marker-alt"></i>
-            </div>
-            <div class="stat-text">
-              <h3>25+</h3>
-              <p>Cities Covered</p>
-            </div>
-          </div>
-        </div>
+  <!-- Hero Section - Redesigned -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Professional Services At Your Doorstep</h1>
+      <p>Find trusted professionals for all your home and office needs. Fast, reliable, and affordable services across Bangladesh.</p>
+      
+      <div class="hero-btns">
+        <a href="{{ url('/booking') }}" class="btn btn-primary">
+          <i class="fas fa-calendar-check"></i> Book a Service
+        </a>
+        <a href="{{ url('/providers') }}" class="btn btn-outline">
+          <i class="fas fa-user-tie"></i> Become a Provider
+        </a>
       </div>
       
-      <div class="hero-image">
-        <img src="{{ asset('images/hero-service.png') }}" alt="Service Professionals">
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-text">
+            <h3>5,000+</h3>
+            <p>Happy Customers</p>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="fas fa-user-cog"></i>
+          </div>
+          <div class="stat-text">
+            <h3>1,200+</h3>
+            <p>Verified Providers</p>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <div class="stat-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="stat-text">
+            <h3>25+</h3>
+            <p>Cities Covered</p>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+    
+    <div class="hero-image">
+      <img src="{{ asset('images/hero-service.png') }}" alt="Service Professionals">
+    </div>
+  </div>
+</section>
 
-  <!-- Search Section -->
-  <section class="search-section">
-    <div class="search-container">
-      <div class="search-title">
-        <h2>What Service Do You Need?</h2>
-        <p>Find the right professional for your specific need</p>
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(41,47,54,0.85) 0%, rgba(65,72,82,0.85) 100%), 
+                url('{{ asset('images/wall.jpg') }}') no-repeat center center/cover;
+    background-attachment: fixed;
+    color: white;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .hero p {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    max-width: 90%;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .hero-btns .btn {
+    padding: 14px 28px;
+    font-size: 1rem;
+    min-width: 180px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: var(--transition);
+  }
+
+  .stat-item:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-3px);
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+    margin-right: 15px;
+    color: var(--accent);
+  }
+
+  .stat-text h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-text p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .hero-image {
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+    width: 45%;
+    max-width: 650px;
+    z-index: 1;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 992px) {
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+    
+    .hero-image {
+      width: 45%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 120px 0 60px;
+      text-align: center;
+    }
+    
+    .hero-content {
+      max-width: 100%;
+    }
+    
+    .hero-image {
+      display: none;
+    }
+    
+    .hero p {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .hero-btns {
+      justify-content: center;
+    }
+    
+    .hero-stats {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .hero h1 {
+      font-size: 2.2rem;
+    }
+    
+    .hero p {
+      font-size: 1.1rem;
+    }
+    
+    .hero-btns {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .hero-btns .btn {
+      width: 100%;
+    }
+  }
+</style>
+
+  <!-- Search Section - Redesigned -->
+<section class="search-section">
+  <div class="search-container">
+    <div class="search-title">
+      <h2>What Service Do You Need?</h2>
+      <p>Find the right professional for your specific need</p>
+    </div>
+    
+    <form class="search-form" id="searchForm">
+      <div class="search-input">
+        <input type="text" placeholder="Electrician, Plumber, Cleaner..." id="service-search" autocomplete="off">
+        <i class="fas fa-search"></i>
+        <div class="search-suggestions" id="service-suggestions"></div>
       </div>
       
-      <form class="search-form">
-        <div class="search-input">
-          <input type="text" placeholder="Electrician, Plumber, Cleaner..." id="service-search" autocomplete="off">
-          <i class="fas fa-search"></i>
-          <div class="search-suggestions" id="service-suggestions"></div>
-        </div>
-        
-        <div class="search-input">
-          <select id="location-select">
-            <option value="">Select Location</option>
-            <option value="dhaka">Dhaka</option>
-            <option value="chittagong">Chittagong</option>
-            <option value="sylhet">Sylhet</option>
-            <option value="khulna">Khulna</option>
-            <option value="rajshahi">Rajshahi</option>
-          </select>
-          <i class="fas fa-map-marker-alt"></i>
-        </div>
-        
-        <div class="search-input">
-          <select id="service-type">
-            <option value="">Service Category</option>
-            <option value="home">Home Services</option>
-            <option value="office">Office Services</option>
-            <option value="emergency">Emergency Services</option>
-          </select>
-          <i class="fas fa-tags"></i>
-        </div>
-        
-        <button type="submit" class="search-btn">
-          Find Professionals <i class="fas fa-arrow-right"></i>
-        </button>
-      </form>
-    </div>
-  </section>
+      <div class="search-input">
+        <select id="location-select">
+          <option value="">Select Location</option>
+          <option value="dhaka">Dhaka</option>
+          <option value="chittagong">Chittagong</option>
+          <option value="sylhet">Sylhet</option>
+          <option value="khulna">Khulna</option>
+          <option value="rajshahi">Rajshahi</option>
+        </select>
+        <i class="fas fa-map-marker-alt"></i>
+      </div>
+      
+      <div class="search-input">
+        <select id="service-type">
+          <option value="">Service Category</option>
+          <option value="home">Home Services</option>
+          <option value="office">Office Services</option>
+          <option value="emergency">Emergency Services</option>
+        </select>
+        <i class="fas fa-tags"></i>
+      </div>
+      
+      <button type="button" class="search-btn" id="findProfessionalsBtn">
+        Find Professionals <i class="fas fa-arrow-right"></i>
+      </button>
+    </form>
+  </div>
+</section>
 
-  <!-- Services Section -->
+<script>
+  document.getElementById('findProfessionalsBtn').addEventListener('click', function() {
+    // Check if user is authenticated (you'll need to implement this check)
+    const isAuthenticated = {{ auth()->check() ? 'true' : 'false' }};
+    
+    if (isAuthenticated) {
+      // User is logged in - redirect to dashboard
+      window.location.href = "{{ route('dashboard') }}";
+      
+      // Optional: Pass search parameters to dashboard
+      // const serviceType = document.getElementById('service-type').value;
+      // window.location.href = `{{ route('dashboard') }}?service=${serviceType}`;
+    } else {
+      // User not logged in - redirect to login
+      window.location.href = "{{ route('login') }}";
+      
+      // Optional: Pass search parameters to login page to remember the search
+      // const serviceType = document.getElementById('service-type').value;
+      // window.location.href = `{{ route('login') }}?redirect_to=dashboard&service=${serviceType}`;
+    }
+  });
+</script>
+
+  <!-- Services Section - Redesigned -->
   <section class="services">
     <div class="container">
       <div class="section-title">
@@ -1723,7 +2126,7 @@
     </div>
   </section>
 
-  <!-- Features Section -->
+  <!-- Features Section - Redesigned -->
   <section class="features">
     <div class="container">
       <div class="section-title">
@@ -1767,7 +2170,7 @@
     </div>
   </section>
 
-  <!-- How It Works -->
+  <!-- How It Works - Redesigned -->
   <section class="how-it-works">
     <div class="container">
       <div class="section-title">
@@ -1814,7 +2217,7 @@
     </div>
   </section>
 
-  <!-- Testimonials -->
+  <!-- Testimonials - Redesigned -->
   <section class="testimonials">
     <div class="container">
       <div class="section-title">
@@ -1895,7 +2298,7 @@
     </div>
   </section>
 
-  <!-- Partners -->
+  <!-- Partners - Redesigned -->
   <section class="partners">
     <div class="container">
       <div class="section-title">
@@ -1923,7 +2326,7 @@
     </div>
   </section>
 
-  <!-- Worker CTA Section -->
+  <!-- Worker CTA Section - Redesigned -->
   <section class="worker-cta-section">
     <div class="container">
       <div class="worker-cta-content">
@@ -1968,7 +2371,7 @@
     </div>
   </section>
 
-  <!-- App Download -->
+  <!-- App Download - Redesigned -->
   <section class="app-download">
     <div class="container">
       <div class="app-container">
@@ -2002,7 +2405,7 @@
     </div>
   </section>
 
-  <!-- Newsletter -->
+  <!-- Newsletter - Redesigned -->
   <section class="newsletter">
     <div class="container">
       <div class="newsletter-content">
@@ -2017,7 +2420,7 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Footer - Redesigned -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -2080,7 +2483,8 @@
   document.addEventListener('DOMContentLoaded', function () {
     const header = document.getElementById('header');
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const nav = document.getElementById('nav');
+    const mainNav = document.getElementById('mainNav');
+    const navOverlay = document.getElementById('navOverlay');
     const dropdowns = document.querySelectorAll('.dropdown');
 
     // Header scroll effect
@@ -2094,14 +2498,18 @@
 
     // Mobile menu toggle
     mobileMenuBtn.addEventListener('click', function () {
-      nav.classList.toggle('active');
+      this.classList.toggle('active');
+      mainNav.classList.toggle('active');
+      navOverlay.classList.toggle('active');
+      document.body.classList.toggle('no-scroll');
     });
 
-    // Close mobile nav when clicking outside
-    document.addEventListener('click', function (e) {
-      if (!nav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-        nav.classList.remove('active');
-      }
+    // Close mobile nav when clicking overlay
+    navOverlay.addEventListener('click', function () {
+      mobileMenuBtn.classList.remove('active');
+      mainNav.classList.remove('active');
+      this.classList.remove('active');
+      document.body.classList.remove('no-scroll');
     });
 
     // Mobile dropdown functionality
@@ -2112,15 +2520,27 @@
       link.addEventListener('click', function (e) {
         if (window.innerWidth <= 992) {
           e.preventDefault();
-          menu.classList.toggle('show');
+          dropdown.classList.toggle('active');
 
           // Close other dropdowns
           dropdowns.forEach(other => {
             if (other !== dropdown) {
-              const otherMenu = other.querySelector('.dropdown-menu');
-              otherMenu.classList.remove('show');
+              other.classList.remove('active');
             }
           });
+        }
+      });
+    });
+
+    // Close mobile menu when clicking a link
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 992) {
+          mobileMenuBtn.classList.remove('active');
+          mainNav.classList.remove('active');
+          navOverlay.classList.remove('active');
+          document.body.classList.remove('no-scroll');
         }
       });
     });
@@ -2128,10 +2548,13 @@
     // Responsive reset on resize
     window.addEventListener('resize', function () {
       if (window.innerWidth > 992) {
-        nav.classList.remove('active');
+        mobileMenuBtn.classList.remove('active');
+        mainNav.classList.remove('active');
+        navOverlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+        
         dropdowns.forEach(dropdown => {
-          const menu = dropdown.querySelector('.dropdown-menu');
-          menu.classList.remove('show');
+          dropdown.classList.remove('active');
         });
       }
     });

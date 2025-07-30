@@ -596,7 +596,6 @@
                     <li><a href="{{ url('/services') }}">Services</a></li>
                     <li><a href="{{ url('/contact') }}">Contact</a></li>
                     <li><a href="{{ url('/portfolio') }}" class="active">Portfolio</a></li>
-                    <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
