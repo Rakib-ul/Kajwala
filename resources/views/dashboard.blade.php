@@ -624,7 +624,9 @@
   <!-- Header with User Menu -->
   <header class="main-header">
     <div class="container header-content">
-      <img src="{{ asset('images/kaajwala.png') }}" alt="KaajWala Logo" class="logo">
+      <a href="{{url('/')}}">
+        <img src="{{ asset('images/kaajwala.png') }}" alt="KaajWala Logo" class="logo">
+      </a>
       
       <div class="user-menu">
         <a href="#" class="notification">
