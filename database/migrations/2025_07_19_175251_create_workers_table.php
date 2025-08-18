@@ -16,11 +16,17 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone');
-            $table->text('skills');
-            $table->string('profile_picture')->nullable();
-            $table->decimal('hourly_rate', 8, 2);
+            $table->string('password');
             $table->text('address');
+            $table->decimal('hourly_rate', 10, 2);
+            $table->integer('experience_years');
+            $table->string('profile_image')->nullable();
+            $table->string('documents')->nullable();
+            $table->text('bio')->nullable();
             $table->boolean('is_available')->default(true);
+            $table->boolean('is_verified')->default(false);
+            $table->decimal('rating', 3, 2)->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

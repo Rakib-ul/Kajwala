@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->decimal('min_price', 8, 2);
-            $table->decimal('max_price', 8, 2);
-            $table->string('icon')->nullable();
+            $table->decimal('min_price', 10, 2);
+            $table->decimal('max_price', 10, 2);
+            $table->string('icon_class')->default('fas fa-tools');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-// likhon 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\WorkerController;
 
 // Public Routes
 Route::get('/', function () {
@@ -79,14 +80,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/request-service', [DashboardController::class, 'requestService'])->name('request.service');
     
     // Profile Routes
-    // Route::get('/profile', function () {
-    //     return view('profile');
-    // })->name('profile');
-    // Profile Routes (✅ updated to use ProfileController)
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     
     // Service Flow Routes
+    Route::post('/services/find', [ServiceController::class, 'findServices'])->name('services.find');
+    Route::get('/workers/select', [ServiceController::class, 'selectWorkers'])->name('workers.select');
+    Route::get('/workers/{worker}', [WorkerController::class, 'show'])->name('worker.details');
+    
     Route::get('/select-workers', function () {
         return view('select-workers');
     })->name('select.workers');
