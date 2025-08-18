@@ -53,7 +53,7 @@
       padding: 0 20px;
     }
     
-    /* Header & Navigation - Redesigned */
+    /* Header & Navigation - Updated with Profile Dropdown */
     header {
       position: fixed;
       top: 0;
@@ -169,7 +169,7 @@
       font-size: 0.9rem;
     }
     
-    /* Dropdown Menu - Redesigned */
+    /* Dropdown Menu - Updated */
     .dropdown {
       position: relative;
       height: 100%;
@@ -222,7 +222,85 @@
       text-align: center;
     }
     
-    /* Navigation Buttons - Redesigned */
+    /* Profile Dropdown - New */
+    .profile-dropdown {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+    
+    .profile-btn {
+      display: flex;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0 15px;
+      height: 100%;
+    }
+    
+    .profile-img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 8px;
+      border: 2px solid var(--primary-light);
+    }
+    
+    .profile-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--dark);
+      margin-right: 5px;
+    }
+    
+    .profile-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 200px;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      padding: 10px 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: var(--transition);
+      z-index: 100;
+    }
+    
+    .profile-dropdown:hover .profile-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .profile-dropdown-menu a {
+      padding: 12px 20px;
+      color: var(--gray);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+    
+    .profile-dropdown-menu a:hover {
+      color: var(--primary);
+      background: var(--primary-light);
+      padding-left: 25px;
+    }
+    
+    .profile-dropdown-menu a i {
+      font-size: 0.8rem;
+      width: 20px;
+      text-align: center;
+      margin-right: 10px;
+    }
+    
+    /* Navigation Buttons */
     .nav-buttons {
       display: flex;
       align-items: center;
@@ -267,7 +345,7 @@
       transform: translateY(-2px);
     }
     
-    /* Mobile Menu Button - Redesigned */
+    /* Mobile Menu Button */
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -329,7 +407,7 @@
       transform: rotate(-45deg);
     }
     
-    /* Mobile Navigation - Redesigned */
+    /* Mobile Navigation */
     @media (max-width: 992px) {
       .mobile-menu-btn {
         display: flex;
@@ -410,6 +488,37 @@
         padding-left: 10px;
       }
       
+      /* Profile dropdown mobile styles */
+      .profile-dropdown {
+        width: 100%;
+        height: auto;
+        padding: 15px 0;
+      }
+      
+      .profile-btn {
+        width: 100%;
+        padding: 0;
+        justify-content: space-between;
+      }
+      
+      .profile-dropdown-menu {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+      }
+      
+      .profile-dropdown.active .profile-dropdown-menu {
+        max-height: 500px;
+        padding: 10px 0 10px 20px;
+      }
+      
       .nav-buttons {
         width: 100%;
         margin-top: 30px;
@@ -441,10 +550,10 @@
         visibility: visible;
       }
     }
-    
-    /* Hero Section - Redesigned */
+
+    /* New Hero Section - Company Focus */
     .hero {
-      min-height: 100vh;
+      min-height: 80vh;
       display: flex;
       align-items: center;
       padding: 80px 0;
@@ -452,23 +561,168 @@
       overflow: hidden;
       background: linear-gradient(135deg, rgba(41,47,54,0.95) 0%, rgba(65,72,82,0.95) 100%), url('{{ asset('images/hero-bg.jpg') }}') no-repeat center center/cover;
       background-attachment: fixed;
+      color: white;
+      text-align: center;
     }
-    
+
     .hero-content {
       position: relative;
       z-index: 2;
-      max-width: 600px;
-      color: white;
+      max-width: 900px;
+      margin: 0 auto;
+      animation: fadeInUp 0.8s ease-out;
     }
-    
+
     .hero h1 {
       font-size: 3.5rem;
       font-weight: 700;
       line-height: 1.2;
       margin-bottom: 20px;
       font-family: 'Montserrat', sans-serif;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
-    
+
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .company-stats {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 50px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(5px);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: var(--transition);
+      min-width: 220px;
+      text-align: center;
+    }
+
+    .stat-card:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 15px;
+      margin-top: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-btns .btn {
+      padding: 14px 28px;
+      font-size: 1rem;
+      min-width: 180px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Styles for Hero */
+    @media (max-width: 992px) {
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .company-stats {
+        gap: 20px;
+      }
+      
+      .stat-card {
+        min-width: 180px;
+        padding: 25px 15px;
+      }
+      
+      .stat-number {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 100px 0 60px;
+      }
+      
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+      
+      .company-stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+      
+      .stat-card {
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .hero-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .hero-btns .btn {
+        width: 100%;
+        max-width: 250px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+    }
     .hero p {
       font-size: 1.25rem;
       margin-bottom: 30px;
@@ -1694,7 +1948,29 @@
         </ul>
         
         <div class="nav-buttons">
-          <a href="{{ url('/login') }}" class="btn btn-outline">Login</a>
+          @auth
+            <!-- Display profile dropdown when logged in -->
+            <div class="profile-dropdown">
+              <button class="profile-btn" id="profileBtn">
+                <img src="{{ auth()->user()->profile_photo ?? asset('images/default-profile.png') }}" alt="Profile" class="profile-img">
+                <span class="profile-name">{{ auth()->user()->name }}</span>
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="profile-dropdown-menu">
+                <a href="{{ url('/profile') }}"><i class="fas fa-user"></i> View Profile</a>
+                <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                  <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                  @csrf
+                </form>
+              </div>
+            </div>
+          @else
+            <!-- Display login button when not logged in -->
+            <a href="{{ url('/login') }}" class="btn btn-outline">Login</a>
+            <a href="{{ url('/register') }}" class="btn btn-primary">Register</a>
+          @endauth
         </div>
       </nav>
     </div>
@@ -1707,15 +1983,7 @@
       <h1>Professional Services At Your Doorstep</h1>
       <p>Find trusted professionals for all your home and office needs. Fast, reliable, and affordable services across Bangladesh.</p>
       
-      <div class="hero-btns">
-        <a href="{{ url('/booking') }}" class="btn btn-primary">
-          <i class="fas fa-calendar-check"></i> Book a Service
-        </a>
-        <a href="{{ url('/providers') }}" class="btn btn-outline">
-          <i class="fas fa-user-tie"></i> Become a Provider
-        </a>
-      </div>
-      
+    
       <div class="hero-stats">
         <div class="stat-item">
           <div class="stat-icon">
@@ -2486,6 +2754,8 @@
     const mainNav = document.getElementById('mainNav');
     const navOverlay = document.getElementById('navOverlay');
     const dropdowns = document.querySelectorAll('.dropdown');
+    const profileDropdown = document.querySelector('.profile-dropdown');
+    const profileBtn = document.getElementById('profileBtn');
 
     // Header scroll effect
     window.addEventListener('scroll', function () {
@@ -2528,9 +2798,29 @@
               other.classList.remove('active');
             }
           });
+          
+          // Close profile dropdown if open
+          if (profileDropdown) {
+            profileDropdown.classList.remove('active');
+          }
         }
       });
     });
+
+    // Profile dropdown functionality
+    if (profileDropdown && profileBtn) {
+      profileBtn.addEventListener('click', function (e) {
+        if (window.innerWidth <= 992) {
+          e.preventDefault();
+          profileDropdown.classList.toggle('active');
+          
+          // Close other dropdowns
+          dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+          });
+        }
+      });
+    }
 
     // Close mobile menu when clicking a link
     const navLinks = document.querySelectorAll('.nav-links a');
@@ -2556,6 +2846,10 @@
         dropdowns.forEach(dropdown => {
           dropdown.classList.remove('active');
         });
+        
+        if (profileDropdown) {
+          profileDropdown.classList.remove('active');
+        }
       }
     });
   });
