@@ -104,3 +104,8 @@ Route::middleware('auth')->group(function () {
         return view('worker-profile');
     })->name('worker.profile');
 });
+
+// API Routes (added without modifying existing routes)
+Route::prefix('api')->middleware('auth:sanctum')->group(function () {
+    Route::get('/dashboard/stats', [DashboardController::class, 'getStats']);
+});

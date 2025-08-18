@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Service;
+use App\Models\ServiceRequest;
+use App\Models\Worker;
+use App\Http\Requests\StoreServiceRequestRequest;
 
 class DashboardController extends Controller
 {
@@ -14,29 +18,30 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // Get the authenticated user
         $user = Auth::user();
-
-        // Sample data - replace with your actual data logic
+        
+        // Get stats from database
         $stats = [
-            'total_services' => 12,
-            'completed' => 8,
-            'in_progress' => 3,
-            'cancelled' => 1
+            'total_services' => ServiceRequest::where('user_id', $user->id)->count(),
+            'completed' => ServiceRequest::where('user_id', $user->id)
+                            ->where('status', 'completed')->count(),
+            'in_progress' => ServiceRequest::where('user_id', $user->id)
+                            ->whereIn('status', ['assigned', 'in_progress'])->count(),
+            'cancelled' => ServiceRequest::where('user_id', $user->id)
+                            ->where('status', 'cancelled')->count(),
         ];
 
-        $recentRequests = [
-            [
-                'service' => 'Electrician',
-                'date' => now()->subDays(2)->format('d M Y'),
-                'worker' => 'Md. Rahman',
-                'amount' => '৳1200',
-                'status' => 'Completed'
-            ],
-            // Add more sample data as needed
-        ];
+        // Get recent service requests with eager loading
+        $recentRequests = ServiceRequest::with(['service', 'worker'])
+            ->where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
 
-        return view('dashboard', compact('user', 'stats', 'recentRequests'));
+        // Get all active services for the service selection form
+        $services = Service::where('is_active', true)->get();
+
+        return view('dashboard', compact('user', 'stats', 'recentRequests', 'services'));
     }
 
     /**
@@ -49,16 +54,68 @@ class DashboardController extends Controller
     {
         $validated = $request->validate([
             'location' => 'required|string|max:255',
-            'services' => 'required|array',
-            'services.*' => 'string'
+            'services' => 'required|array|min:1',
+            'services.*' => 'exists:services,id'
         ]);
 
-        // Process the request here
-        // Typically you would save to database, etc.
-
-        return redirect()->route('select.workers')->with([
+        // Store selected services in session for the next step
+        session()->put('service_request', [
             'location' => $validated['location'],
-            'services' => $validated['services']
+            'service_ids' => $validated['services']
         ]);
+
+        return redirect()->route('select.workers');
+    }
+
+    /**
+     * Store a new service request
+     *
+     * @param  StoreServiceRequestRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeServiceRequest(StoreServiceRequestRequest $request)
+    {
+        $serviceRequest = ServiceRequest::create([
+            'user_id' => Auth::id(),
+            'service_id' => $request->service_id,
+            'description' => $request->description,
+            'location' => $request->location,
+            'scheduled_date' => $request->scheduled_date,
+            'status' => 'pending',
+            'price' => $this->calculateServicePrice($request->service_id)
+        ]);
+
+        return redirect()->route('dashboard')
+            ->with('success', 'Service request created successfully!');
+    }
+
+    /**
+     * Calculate service price based on service ID
+     *
+     * @param  int  $serviceId
+     * @return float
+     */
+    protected function calculateServicePrice($serviceId)
+    {
+        $service = Service::findOrFail($serviceId);
+        
+        // Simple calculation - you can implement more complex logic here
+        return ($service->min_price + $service->max_price) / 2;
+    }
+
+    /**
+     * Show service request details
+     *
+     * @param  ServiceRequest  $serviceRequest
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showServiceRequest(ServiceRequest $serviceRequest)
+    {
+        // Ensure the request belongs to the current user
+        if ($serviceRequest->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return view('service-requests.show', compact('serviceRequest'));
     }
 }
