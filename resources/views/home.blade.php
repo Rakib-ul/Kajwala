@@ -1952,7 +1952,7 @@
             <!-- Display profile dropdown when logged in -->
             <div class="profile-dropdown">
               <button class="profile-btn" id="profileBtn">
-                <img src="{{ auth()->user()->profile_photo ?? asset('images/default-profile.png') }}" alt="Profile" class="profile-img">
+                <img src="{{ auth()->user()->profile_photo ?? asset(auth()->user()->profile_picture) }}" alt="Profile" class="profile-img">
                 <span class="profile-name">{{ auth()->user()->name }}</span>
                 <i class="fas fa-chevron-down"></i>
               </button>
@@ -1969,7 +1969,6 @@
           @else
             <!-- Display login button when not logged in -->
             <a href="{{ url('/login') }}" class="btn btn-outline">Login</a>
-            <a href="{{ url('/register') }}" class="btn btn-primary">Register</a>
           @endauth
         </div>
       </nav>
