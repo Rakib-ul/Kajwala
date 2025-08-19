@@ -168,3 +168,6 @@ Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn'])->name('pay.ipn'
 
 //subscriber azam
 Route::post('/subscribe', [NewsletterController::class, 'store'])->name('newsletter.subscribe');
+
+//nijhum
+
