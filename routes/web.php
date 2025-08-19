@@ -51,6 +51,8 @@ Route::get('/', function () {
     return view('home');
 });
 
+//likhon worker 
+
 // Authentication Routes
 Route::middleware('guest')->group(function () {
     // User Auth Routes
@@ -85,6 +87,27 @@ Route::middleware('auth')->group(function () {
         return view('worker-forgot-password');
     })->name('worker.password.request');
 });
+//likhon 
+
+// Worker Auth Routes
+
+// Display the worker login form
+Route::get('/worker-login', [WorkerController::class, 'showLoginForm'])->name('worker.login');
+
+// Handle worker login
+Route::post('/worker-login', [WorkerController::class, 'login'])->name('worker.login.submit');
+
+// Display the worker registration form
+Route::get('/worker-register', [WorkerController::class, 'showRegisterForm'])->name('worker.register');
+
+// Handle worker registration
+Route::post('/worker-register', [WorkerController::class, 'register'])->name('worker.register.submit');
+
+// Display the worker forgot password form
+Route::get('/worker-forgot-password', [WorkerController::class, 'showForgotPasswordForm'])->name('worker.password.request');
+
+// Handle worker password reset logic (you can add the controller method for handling reset)
+Route::post('/worker-forgot-password', [WorkerController::class, 'handleForgotPassword'])->name('worker.password.email');
 
 // Logout Route (accessible when authenticated)
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -139,3 +162,4 @@ Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
 
 Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END
+

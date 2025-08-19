@@ -13,20 +13,12 @@ class Worker extends Authenticatable
     protected $guard = 'worker';
 
     protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'password',
-        'address',
-        'hourly_rate',
-        'experience_years',
-        'profile_image',
-        'documents',
-        'bio',
-        'is_available',
-        'is_verified',
-        'rating'
-    ];
+    'name', 'email', 'phone', 'password', 'address',
+    'service',   // ✅ add this
+    'hourly_rate', 'experience_years', 'profile_image',
+    'documents', 'is_verified'
+];
+
 
     protected $hidden = [
         'password',

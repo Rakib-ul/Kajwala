@@ -6,14 +6,18 @@ use App\Models\Worker;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class WorkerController extends Controller
 {
     /**
-     * Display worker registration form
+     * Show worker registration form
      */
     public function showRegisterForm()
     {
+        // Fetch active services
         $services = Service::where('is_active', true)->get();
         return view('worker-register', compact('services'));
     }
@@ -22,55 +26,50 @@ class WorkerController extends Controller
      * Handle worker registration
      */
     public function register(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:workers,email',
-            'phone' => 'required|string|max:20',
-            'password' => 'required|string|min:8|confirmed',
-            'address' => 'required|string|max:255',
-            'services' => 'required|array',
-            'services.*' => 'exists:services,id',
-            'hourly_rate' => 'required|numeric|min:0',
-            'experience' => 'required|integer|min:0',
-            'profile_image' => 'nullable|image|max:2048',
-            'documents' => 'nullable|file|mimes:pdf,jpg,png|max:5120'
-        ]);
+{
+    // Validate the incoming request
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:workers,email',
+        'phone' => 'required|string|max:20',
+        'password' => 'required|string|min:8|confirmed',
+        'address' => 'required|string|max:255',
+        'service' => 'required|string|in:plumber,electrician,cleaner,painter,mover',
+        'hourly_rate' => 'required|numeric|min:0',
+        'experience' => 'required|integer|min:0',
+        'profile_image' => 'nullable|image|max:2048',
+        'documents' => 'nullable|file|mimes:pdf,jpg,png|max:5120'
+    ]);
 
-        // Handle file uploads
-        $profileImagePath = null;
-        if ($request->hasFile('profile_image')) {
-            $profileImagePath = $request->file('profile_image')->store('worker_profiles', 'public');
-        }
+    // Handle file uploads
+    $profileImagePath = $request->hasFile('profile_image')
+        ? $request->file('profile_image')->store('worker_profiles', 'public')
+        : null;
 
-        $documentPath = null;
-        if ($request->hasFile('documents')) {
-            $documentPath = $request->file('documents')->store('worker_documents', 'public');
-        }
+    $documentPath = $request->hasFile('documents')
+        ? $request->file('documents')->store('worker_documents', 'public')
+        : null;
 
-        // Create worker
-        $worker = Worker::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'],
-            'password' => bcrypt($validated['password']),
-            'address' => $validated['address'],
-            'hourly_rate' => $validated['hourly_rate'],
-            'experience_years' => $validated['experience'],
-            'profile_image' => $profileImagePath,
-            'documents' => $documentPath,
-            'is_verified' => false // Admin needs to verify
-        ]);
+    // Create worker
+    Worker::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'phone' => $validated['phone'],
+        'password' => bcrypt($validated['password']),
+        'address' => $validated['address'],
+        'service' => $validated['service'],   // ✅ save one service
+        'hourly_rate' => $validated['hourly_rate'],
+        'experience_years' => $validated['experience'],
+        'profile_image' => $profileImagePath,
+        'documents' => $documentPath,
+        'is_verified' => false, // Admin needs to verify
+    ]);
 
-        // Attach services
-        $worker->services()->attach($validated['services']);
-
-        // Redirect with success message
-        return redirect()->route('worker.login')->with('success', 'Registration successful! Your account is pending verification.');
-    }
+    return redirect()->route('worker.login')->with('success', 'Registration successful! Your account is pending verification.');
+}
 
     /**
-     * Display worker login form
+     * Show worker login form
      */
     public function showLoginForm()
     {
@@ -84,10 +83,10 @@ class WorkerController extends Controller
     {
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        if (auth()->guard('worker')->attempt($credentials)) {
+        if (Auth::guard('worker')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended(route('worker.dashboard'));
         }
@@ -113,7 +112,42 @@ class WorkerController extends Controller
     }
 
     /**
-     * Display worker profile
+     * Handle worker logout
+     */
+    public function logout(Request $request)
+    {
+        auth()->guard('worker')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/')->with('success', 'You have been logged out.');
+    }
+
+    /**
+     * Show forgot password form
+     */
+    public function showForgotPasswordForm()
+    {
+        return view('worker-forgot-password');
+    }
+
+    /**
+     * Handle forgot password request
+     */
+    public function handleForgotPassword(Request $request)
+    {
+        // Validate email
+        $request->validate(['email' => 'required|email']);
+
+        // Send password reset link
+        $status = Password::sendResetLink($request->only('email'));
+
+        return $status == Password::RESET_LINK_SENT
+            ? back()->with('status', __($status))
+            : back()->withErrors(['email' => __($status)]);
+    }
+
+    /**
+     * Show worker profile
      */
     public function show(Worker $worker)
     {
@@ -160,29 +194,10 @@ class WorkerController extends Controller
         }
 
         $worker->update($validated);
-        
+
         // Sync services
         $worker->services()->sync($validated['services']);
 
         return redirect()->route('worker.profile')->with('success', 'Profile updated successfully!');
-    }
-
-    /**
-     * Display forgot password form
-     */
-    public function showForgotPasswordForm()
-    {
-        return view('worker-forgot-password');
-    }
-
-    /**
-     * Handle worker logout
-     */
-    public function logout(Request $request)
-    {
-        auth()->guard('worker')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/')->with('success', 'You have been logged out.');
     }
 }
