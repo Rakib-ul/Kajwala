@@ -3,10 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Worker;
+use App\Models\Service;
 
 class ServiceController extends Controller
 {
-    // In your ServiceController
+    // Show profiles for a given service category using the skill field
+    public function showCategory($category)
+    {
+        // Convert category slug to readable format
+        $categoryName = str_replace(['-', '_'], ' ', $category);
+        $categoryName = ucwords($categoryName);
+        
+        // Filter workers by skill field containing the category name (case-insensitive)
+        $profiles = Worker::whereRaw('LOWER(skill) LIKE ?', ['%' . strtolower($categoryName) . '%'])
+            ->where('is_verified', true)
+            ->get();
+            
+        return view('service_category', [
+            'category' => $categoryName,
+            'categorySlug' => $category,
+            'profiles' => $profiles,
+        ]);
+    }
+
     public function findServices(Request $request)
     {
         $request->validate([
@@ -44,30 +64,6 @@ class ServiceController extends Controller
             'workers' => $workers,
             'services' => Service::whereIn('id', $request->services)->get(),
             'location' => $request->location
-        ]);
-    }
-
-    // Show profiles for a given service category
-    public function category($category)
-    {
-        // Map category slug to service name if needed
-        $serviceName = str_replace(['-', '_'], ' ', $category);
-        $serviceName = ucwords($serviceName);
-
-        // Find service by name
-        $service = \App\Models\Service::whereRaw('LOWER(name) = ?', [strtolower($serviceName)])->first();
-        if (!$service) {
-            abort(404, 'Service not found');
-        }
-
-        // Get workers for this service
-        $profiles = \App\Models\Worker::whereHas('services', function ($q) use ($service) {
-            $q->where('service_id', $service->id);
-        })->get();
-
-        return view('service_category', [
-            'category' => $category,
-            'profiles' => $profiles,
         ]);
     }
 }
