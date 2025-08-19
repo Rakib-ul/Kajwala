@@ -4,34 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
+return new class extends Migration {
+    public function up(): void {
         Schema::create('service_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('service_id')->constrained();
-            $table->foreignId('worker_id')->nullable()->constrained('workers');
-            $table->text('description');
-            $table->string('location');
-            $table->dateTime('scheduled_date');
-            $table->decimal('price', 8, 2);
-            $table->enum('status', ['pending', 'assigned', 'in_progress', 'completed', 'cancelled'])->default('pending');
-            $table->text('user_notes')->nullable();
-            $table->text('worker_notes')->nullable();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('service_id')->constrained('services')->cascadeOnDelete();
+            $table->foreignId('worker_id')->nullable()->constrained('workers')->nullOnDelete();
+            $table->enum('status', ['pending','assigned','in_progress','completed','cancelled'])->default('pending');
+            $table->dateTime('scheduled_at')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
+    public function down(): void {
         Schema::dropIfExists('service_requests');
     }
 };

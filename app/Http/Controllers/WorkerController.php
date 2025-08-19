@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 
+// Add these for Admin CRUD validation
+use App\Http\Requests\Admin\StoreWorkerRequest;
+use App\Http\Requests\Admin\UpdateWorkerRequest;
+
 class WorkerController extends Controller
 {
     /**
@@ -26,59 +30,50 @@ class WorkerController extends Controller
      * Handle worker registration
      */
     public function register(Request $request)
-{
-    // Validate the incoming request
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:workers,email',
-        'phone' => 'required|string|max:20',
-        'password' => 'required|string|min:8|confirmed',
-        'address' => 'required|string|max:255',
-        'service' => 'required|string|in:plumber,electrician,cleaner,painter,mover',
-        'hourly_rate' => 'required|numeric|min:0',
-        'experience' => 'required|integer|min:0',
-        'profile_image' => 'nullable|image|max:2048',
-        'documents' => 'nullable|file|mimes:pdf,jpg,png|max:5120'
-    ]);
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:workers,email',
+            'phone' => 'required|string|max:20',
+            'password' => 'required|string|min:8|confirmed',
+            'address' => 'required|string|max:255',
+            'service' => 'required|string|in:plumber,electrician,cleaner,painter,mover',
+            'hourly_rate' => 'required|numeric|min:0',
+            'experience' => 'required|integer|min:0',
+            'profile_image' => 'nullable|image|max:2048',
+            'documents' => 'nullable|file|mimes:pdf,jpg,png|max:5120'
+        ]);
 
-    // Handle file uploads
-    $profileImagePath = $request->hasFile('profile_image')
-        ? $request->file('profile_image')->store('worker_profiles', 'public')
-        : null;
+        $profileImagePath = $request->hasFile('profile_image')
+            ? $request->file('profile_image')->store('worker_profiles', 'public')
+            : null;
 
-    $documentPath = $request->hasFile('documents')
-        ? $request->file('documents')->store('worker_documents', 'public')
-        : null;
+        $documentPath = $request->hasFile('documents')
+            ? $request->file('documents')->store('worker_documents', 'public')
+            : null;
 
-    // Create worker
-    Worker::create([
-        'name' => $validated['name'],
-        'email' => $validated['email'],
-        'phone' => $validated['phone'],
-        'password' => bcrypt($validated['password']),
-        'address' => $validated['address'],
-        'service' => $validated['service'],   // ✅ save one service
-        'hourly_rate' => $validated['hourly_rate'],
-        'experience_years' => $validated['experience'],
-        'profile_image' => $profileImagePath,
-        'documents' => $documentPath,
-        'is_verified' => false, // Admin needs to verify
-    ]);
+        Worker::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'password' => bcrypt($validated['password']),
+            'address' => $validated['address'],
+            'service' => $validated['service'],
+            'hourly_rate' => $validated['hourly_rate'],
+            'experience_years' => $validated['experience'],
+            'profile_image' => $profileImagePath,
+            'documents' => $documentPath,
+            'is_verified' => false,
+        ]);
 
-    return redirect()->route('worker.login')->with('success', 'Registration successful! Your account is pending verification.');
-}
+        return redirect()->route('worker.login')->with('success', 'Registration successful! Your account is pending verification.');
+    }
 
-    /**
-     * Show worker login form
-     */
     public function showLoginForm()
     {
         return view('worker-login');
     }
 
-    /**
-     * Handle worker login
-     */
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -96,9 +91,6 @@ class WorkerController extends Controller
         ]);
     }
 
-    /**
-     * Display worker dashboard
-     */
     public function dashboard()
     {
         $worker = auth()->guard('worker')->user();
@@ -111,9 +103,6 @@ class WorkerController extends Controller
         return view('worker-dashboard', compact('worker', 'upcomingJobs'));
     }
 
-    /**
-     * Handle worker logout
-     */
     public function logout(Request $request)
     {
         auth()->guard('worker')->logout();
@@ -122,23 +111,14 @@ class WorkerController extends Controller
         return redirect('/')->with('success', 'You have been logged out.');
     }
 
-    /**
-     * Show forgot password form
-     */
     public function showForgotPasswordForm()
     {
         return view('worker-forgot-password');
     }
 
-    /**
-     * Handle forgot password request
-     */
     public function handleForgotPassword(Request $request)
     {
-        // Validate email
         $request->validate(['email' => 'required|email']);
-
-        // Send password reset link
         $status = Password::sendResetLink($request->only('email'));
 
         return $status == Password::RESET_LINK_SENT
@@ -146,18 +126,12 @@ class WorkerController extends Controller
             : back()->withErrors(['email' => __($status)]);
     }
 
-    /**
-     * Show worker profile
-     */
     public function show(Worker $worker)
     {
         $worker->load('services', 'reviews.user');
         return view('worker-details', compact('worker'));
     }
 
-    /**
-     * Display worker edit profile form
-     */
     public function edit()
     {
         $worker = auth()->guard('worker')->user();
@@ -165,9 +139,6 @@ class WorkerController extends Controller
         return view('worker-profile-edit', compact('worker', 'services'));
     }
 
-    /**
-     * Update worker profile
-     */
     public function update(Request $request)
     {
         $worker = auth()->guard('worker')->user();
@@ -184,9 +155,7 @@ class WorkerController extends Controller
             'services.*' => 'exists:services,id'
         ]);
 
-        // Handle profile image update
         if ($request->hasFile('profile_image')) {
-            // Delete old image if exists
             if ($worker->profile_image) {
                 Storage::disk('public')->delete($worker->profile_image);
             }
@@ -194,10 +163,61 @@ class WorkerController extends Controller
         }
 
         $worker->update($validated);
-
-        // Sync services
         $worker->services()->sync($validated['services']);
 
         return redirect()->route('worker.profile')->with('success', 'Profile updated successfully!');
+    }
+
+    // ===== Admin CRUD =====
+    public function index()
+    {
+        $workers = Worker::latest()->paginate(10);
+        return view('admin.workers.index', compact('workers'));
+    }
+
+    public function create()
+    {
+        return view('admin.workers.create');
+    }
+
+    public function store(StoreWorkerRequest $request)
+    {
+        $data = $request->validated();
+        $data['is_verified'] = $request->boolean('is_verified');
+        Worker::create($data);
+
+        return redirect()->route('admin.workers.index')->with('success', 'Worker created.');
+    }
+
+    // ⚠ already have `show(Worker $worker)` for frontend → keep both
+    public function adminShow(Worker $worker)
+    {
+        return view('admin.workers.show', compact('worker'));
+    }
+
+    public function editAdmin(Worker $worker)
+    {
+        return view('admin.workers.edit', compact('worker'));
+    }
+
+    public function updateAdmin(UpdateWorkerRequest $request, Worker $worker)
+    {
+        $data = $request->validated();
+        $data['is_verified'] = $request->boolean('is_verified');
+        $worker->update($data);
+
+        return redirect()->route('admin.workers.index')->with('success', 'Worker updated.');
+    }
+
+    public function destroy(Worker $worker)
+    {
+        $worker->delete();
+        return redirect()->route('admin.workers.index')->with('success', 'Worker deleted.');
+    }
+
+    public function verify(Worker $worker)
+    {
+        $worker->update(['is_verified' => true]);
+        return back()->with('success', 'Worker verified.');
     }
 }
