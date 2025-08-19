@@ -135,35 +135,62 @@
     }
     
     .service-card {
-      background: var(--white);
-      border-radius: 10px;
-      box-shadow: var(--shadow);
-      padding: 25px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 rgba(60, 60, 90, 0.18), 0 1.5px 6px 0 rgba(249, 109, 0, 0.08);
+      padding: 32px 24px 28px;
+      border-left: 5px solid var(--primary);
       transition: var(--transition);
-      border-left: 4px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 220px;
+      position: relative;
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
-    
     .service-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 16px 48px 0 rgba(60, 60, 90, 0.22), 0 2px 12px 0 rgba(249, 109, 0, 0.12);
+      z-index: 2;
+      border-left: 5px solid var(--primary-dark);
+      background: linear-gradient(120deg, rgba(255,255,255,0.92) 80%, var(--gray) 100%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-    
+    .service-card:hover .service-icon {
+      background: var(--primary);
+      color: var(--white);
+      box-shadow: 0 4px 16px rgba(249, 109, 0, 0.15);
+      transform: scale(1.12) rotate(-6deg);
+      transition: var(--transition);
+    }
     .service-icon {
-      font-size: 2rem;
+      font-size: 2.3rem;
       color: var(--primary);
-      margin-bottom: 15px;
+      margin-bottom: 18px;
+      background: var(--gray);
+      border-radius: 50%;
+      padding: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    
     .service-card h2 {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
+      font-size: 1.25rem;
+      margin-bottom: 8px;
       color: var(--primary);
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
-    
     .service-card p {
       color: var(--secondary);
-      opacity: 0.9;
-      font-size: 0.95rem;
+      opacity: 0.92;
+      font-size: 1rem;
+      margin-top: 2px;
     }
     
     /* Footer */
@@ -339,257 +366,207 @@
     <div class="container">
       <div class="services-grid">
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-bolt"></i></div>
+          <div class="service-icon"><i class="fas fa-lightbulb"></i></div>
           <h2>Electrician</h2>
           <p>Expert electrical repair and installation services for your home or office.</p>
         </div>
-        
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-faucet"></i></div>
+          <div class="service-icon"><i class="fas fa-water"></i></div>
           <h2>Plumber</h2>
           <p>From leaky faucets to full pipe installations, our plumbers are here to help.</p>
         </div>
-        
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-broom"></i></div>
+          <div class="service-icon"><i class="fas fa-soap"></i></div>
           <h2>Cleaner</h2>
           <p>Deep cleaning, regular house cleaning, and move-in/move-out services.</p>
         </div>
-        
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-tools"></i></div>
+          <div class="service-icon"><i class="fas fa-cogs"></i></div>
           <h2>Mechanic</h2>
           <p>On-demand mechanical service and repair for household and light industrial tools.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-paint-roller"></i></div>
           <h2>Painter</h2>
           <p>Interior and exterior wall painting with premium materials and expert finish.</p>
         </div>
-        
+  <!-- Mason card removed -->
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-hammer"></i></div>
-          <h2>Mason</h2>
-          <p>Brickwork, plastering, and concrete repair for new and old structures.</p>
-        </div>
-        
-        <div class="service-card">
-          <div class="service-icon"><i class="fas fa-wood"></i></div>
+          <div class="service-icon"><i class="fas fa-chair"></i></div>
           <h2>Carpenter</h2>
           <p>Custom furniture, repairs, and woodwork done professionally.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-snowflake"></i></div>
           <h2>AC Technician</h2>
           <p>AC installation, servicing, and gas refilling at your doorstep.</p>
         </div>
-        
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-refrigerator"></i></div>
+          <div class="service-icon"><i class="fas fa-icicles"></i></div>
           <h2>Refrigerator Repair</h2>
           <p>Professional diagnosis and repair for fridges and freezers.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-utensils"></i></div>
           <h2>Cook</h2>
           <p>Hire experienced cooks for daily meals or special occasions.</p>
         </div>
-        
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-house-user"></i></div>
+          <div class="service-icon"><i class="fas fa-user"></i></div>
           <h2>Housemaid</h2>
           <p>Full-time and part-time domestic help for all your cleaning and maintenance needs.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
           <h2>Security Guard</h2>
           <p>Licensed and trained security personnel for home and business premises.</p>
         </div>
-        
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-cut"></i></div>
+          <div class="service-icon"><i class="fas fa-scissors"></i></div>
           <h2>Tailor</h2>
           <p>Custom tailoring and alterations for men, women, and kids.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-car"></i></div>
           <h2>Driver</h2>
           <p>Hire experienced drivers for personal or corporate use.</p>
         </div>
-        
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-leaf"></i></div>
+          <div class="service-icon"><i class="fas fa-seedling"></i></div>
           <h2>Gardener</h2>
           <p>Landscape maintenance and gardening for homes and institutions.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-wifi"></i></div>
           <h2>Internet Technician</h2>
           <p>Router installation, troubleshooting, and broadband setup.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-bug"></i></div>
           <h2>Pest Control</h2>
           <p>Safe and effective pest removal for homes, offices, and restaurants.</p>
         </div>
-        
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-laptop"></i></div>
+          <div class="service-icon"><i class="fas fa-desktop"></i></div>
           <h2>Computer Repair</h2>
           <p>Fix slow PCs, replace parts, and install software with ease.</p>
         </div>
-        
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-camera"></i></div>
+          <div class="service-icon"><i class="fas fa-camera-retro"></i></div>
           <h2>Photographer</h2>
           <p>Book professional photographers for weddings, events, or portraits.</p>
         </div>
-        
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-magic"></i></div>
+          <div class="service-icon"><i class="fas fa-air-freshener"></i></div>
           <h2>Makeup Artist</h2>
           <p>Skilled makeup professionals for parties, bridal events, and more.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-tshirt"></i></div>
           <h2>Laundry Service</h2>
           <p>Doorstep laundry and ironing services with pickup and delivery.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-truck-moving"></i></div>
           <h2>Mover & Packer</h2>
           <p>Professional packing, moving, and relocation services.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-home"></i></div>
           <h2>Roofer</h2>
           <p>Roof repairs, waterproofing, and full installations.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-solar-panel"></i></div>
           <h2>Solar Installer</h2>
           <p>Solar panel setup and maintenance for energy efficiency.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-spa"></i></div>
           <h2>Beautician</h2>
           <p>Beauty services including facials, waxing, and threading at home.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-gift"></i></div>
           <h2>Decorator</h2>
           <p>Wedding, party, and corporate event decoration services.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-key"></i></div>
           <h2>Locksmith</h2>
           <p>Emergency lock repair, key duplication, and door unlocking.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-calendar-check"></i></div>
           <h2>Event Organizer</h2>
           <p>Plan and execute weddings, parties, and corporate events.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-gas-pump"></i></div>
           <h2>Gas Line Fitter</h2>
           <p>Installation and repair of residential gas pipelines.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-user-nurse"></i></div>
           <h2>Home Nurse</h2>
           <p>Trained medical staff for elderly or patient care at home.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-money-bill-wave"></i></div>
           <h2>ATM Technician</h2>
           <p>Technical support for ATM and banking machines.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-print"></i></div>
           <h2>Printer Repair</h2>
           <p>Maintenance and repair for all brands of printers and copiers.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-couch"></i></div>
           <h2>Upholsterer</h2>
           <p>Repair and restoration of sofas, chairs, and other furniture.</p>
         </div>
-        
+  <!-- Window Cleaner card removed -->
         <div class="service-card">
-          <div class="service-icon"><i class="fas fa-window-maximize"></i></div>
-          <h2>Window Cleaner</h2>
-          <p>High and low-rise window cleaning professionals.</p>
-        </div>
-        
-        <div class="service-card">
-          <div class="service-icon"><i class="fas fa-truck"></i></div>
+          <div class="service-icon"><i class="fas fa-motorcycle"></i></div>
           <h2>Delivery Rider</h2>
           <p>Express delivery of packages and goods across the city.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-chalkboard-teacher"></i></div>
           <h2>Tutor</h2>
           <p>Home tutoring in math, science, and language subjects.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-tv"></i></div>
           <h2>Cable Installer</h2>
           <p>TV, broadband, and network cable setup services.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
           <h2>Interior Designer</h2>
           <p>Creative residential and commercial space design solutions.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-video"></i></div>
           <h2>CCTV Technician</h2>
           <p>Installation and repair of security camera systems.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-baby"></i></div>
           <h2>Babysitter</h2>
           <p>Trusted child care services for working parents.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-briefcase"></i></div>
           <h2>Office Assistant</h2>
           <p>Part-time or full-time help for small office tasks.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-exclamation-triangle"></i></div>
           <h2>Emergency Repairs</h2>
           <p>Urgent home or utility repair services on call.</p>
         </div>
-        
         <div class="service-card">
           <div class="service-icon"><i class="fas fa-wrench"></i></div>
           <h2>Welding Specialist</h2>
