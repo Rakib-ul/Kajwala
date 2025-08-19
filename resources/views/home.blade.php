@@ -110,16 +110,24 @@
     
     /* Main Navigation */
     .main-nav {
-      display: flex;
+      display: flex !important;
       align-items: center;
       height: 100%;
+      position: relative;
+      z-index: 1001;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
     
     .nav-links {
-      display: flex;
+      display: flex !important;
       list-style: none;
       height: 100%;
       margin-right: 20px;
+      position: relative;
+      z-index: 1002;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
     
     .nav-links > li {
@@ -140,6 +148,7 @@
       align-items: center;
       transition: var(--transition);
       position: relative;
+      z-index: 1003;
     }
     
     .nav-links > li > a:hover {
@@ -169,7 +178,7 @@
       font-size: 0.9rem;
     }
     
-    /* Dropdown Menu - Updated */
+    /* Dropdown Menu - For About Section */
     .dropdown {
       position: relative;
       height: 100%;
@@ -221,6 +230,8 @@
       width: 20px;
       text-align: center;
     }
+    
+
     
     /* Profile Dropdown - New */
     .profile-dropdown {
@@ -454,10 +465,6 @@
         width: 100%;
       }
       
-      .nav-links > li > a:after {
-        display: none;
-      }
-      
       .dropdown {
         height: auto;
       }
@@ -487,6 +494,12 @@
       .dropdown-menu a:hover {
         padding-left: 10px;
       }
+      
+      .nav-links > li > a:after {
+        display: none;
+      }
+      
+
       
       /* Profile dropdown mobile styles */
       .profile-dropdown {
@@ -1921,26 +1934,16 @@
         <ul class="nav-links">
           <li><a href="{{ url('/') }}" class="active"><i class="fas fa-home"></i> Home</a></li>
           
-          <li class="dropdown">
-            <a href="{{ url('/services') }}"><i class="fas fa-tools"></i> Services <i class="fas fa-chevron-down"></i></a>
-            <ul class="dropdown-menu">
-              <li><a href="{{ url('/services/electrician') }}"><i class="fas fa-bolt"></i> Electrician</a></li>
-              <li><a href="{{ url('/services/plumber') }}"><i class="fas fa-faucet"></i> Plumber</a></li>
-              <li><a href="{{ url('/services/cleaner') }}"><i class="fas fa-broom"></i> Cleaner</a></li>
-              <li><a href="{{ url('/services/mechanic') }}"><i class="fas fa-car"></i> Mechanic</a></li>
-              <li><a href="{{ url('/services/movers') }}"><i class="fas fa-truck-moving"></i> Movers</a></li>
-              <li><a href="{{ url('/services/painter') }}"><i class="fas fa-paint-roller"></i> Painter</a></li>
-            </ul>
-          </li>
+          <li><a href="{{ url('/services') }}"><i class="fas fa-tools"></i> Services</a></li>
           
           <li><a href="{{ url('/providers') }}"><i class="fas fa-user-tie"></i> Providers</a></li>
           
           <li class="dropdown">
             <a href="#"><i class="fas fa-info-circle"></i> About <i class="fas fa-chevron-down"></i></a>
             <ul class="dropdown-menu">
-              <li><a href="{{ url('/about') }}"><i class="fas fa-building"></i> Our Company</a></li>
-              <li><a href="{{ url('/team') }}"><i class="fas fa-users"></i> Our Team</a></li>
-              <li><a href="{{ url('/mission') }}"><i class="fas fa-bullseye"></i> Mission & Vision</a></li>
+              <li><a href="{{ url('/about') }}#company"><i class="fas fa-building"></i> Our Company</a></li>
+              <li><a href="{{ url('/about') }}#team"><i class="fas fa-users"></i> Our Team</a></li>
+              <li><a href="{{ url('/about') }}#mission"><i class="fas fa-bullseye"></i> Mission & Vision</a></li>
             </ul>
           </li>
           
@@ -2827,6 +2830,7 @@
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mainNav = document.getElementById('mainNav');
     const navOverlay = document.getElementById('navOverlay');
+
     const dropdowns = document.querySelectorAll('.dropdown');
     const profileDropdown = document.querySelector('.profile-dropdown');
     const profileBtn = document.getElementById('profileBtn');
@@ -2855,8 +2859,8 @@
       this.classList.remove('active');
       document.body.classList.remove('no-scroll');
     });
-
-    // Mobile dropdown functionality
+    
+    // Mobile dropdown functionality for About section
     dropdowns.forEach(dropdown => {
       const link = dropdown.querySelector('a');
       const menu = dropdown.querySelector('.dropdown-menu');
@@ -2880,6 +2884,8 @@
         }
       });
     });
+
+
 
     // Profile dropdown functionality
     if (profileDropdown && profileBtn) {

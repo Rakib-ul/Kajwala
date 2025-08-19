@@ -31,6 +31,7 @@
       background: var(--light);
       color: var(--secondary);
       line-height: 1.6;
+      scroll-behavior: smooth;
     }
     
     a {
@@ -135,6 +136,19 @@
       padding: 40px;
       margin-bottom: 30px;
       transition: var(--transition);
+      scroll-margin-top: 100px;
+    }
+    
+    .about-section:target {
+      border-left: 4px solid var(--primary);
+      background: #fff9f5;
+      animation: highlightSection 0.5s ease-in-out;
+    }
+    
+    @keyframes highlightSection {
+      0% { background: var(--white); }
+      50% { background: #fff9f5; }
+      100% { background: #fff9f5; }
     }
     
     .about-section:hover {
@@ -505,13 +519,13 @@
 
   <section class="about-container">
     <div class="container">
-      <div class="about-section">
+      <div class="about-section" id="company">
         <h2>Our Story</h2>
         <p>Founded in 2020, KaajWala began as a small initiative to connect skilled workers with homeowners in Dhaka. Today, we've grown into Bangladesh's most trusted home services platform, serving thousands of satisfied customers across major cities.</p>
         <p>Our journey started with recognizing the challenges homeowners face in finding reliable service providers, while talented workers struggled to find consistent work. KaajWala bridges this gap with technology, trust, and transparency.</p>
       </div>
 
-      <div class="about-section">
+      <div class="about-section" id="mission">
         <h2>Our Mission</h2>
         <p>We're committed to transforming Bangladesh's home services industry by:</p>
         <ul>
@@ -590,7 +604,7 @@
         </div>
       </div>
 
-<div class="about-section">
+<div class="about-section" id="team">
   <h2>Our Team</h2>
   <p>Behind KaajWala is a dedicated team of professionals committed to revolutionizing home services in Bangladesh:</p>
   

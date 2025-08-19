@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Worker extends Model
 {
-    protected $fillable = ['name', 'email', 'phone', 'skill', 'is_verified', 'address', 'experience_years', 'hourly_rate'];
+    protected $fillable = ['name', 'email', 'phone', 'skill', 'is_verified', 'address', 'experience_years', 'hourly_rate', 'rating'];
 
     public function requests()
     {
