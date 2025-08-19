@@ -150,3 +150,9 @@ Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 // Newsletter Subscribe
 // =====================
 Route::post('/subscribe', [NewsletterController::class, 'store'])->name('newsletter.subscribe');
+
+
+Route::middleware('auth:worker')->group(function () {
+    Route::get('/worker-profile', [WorkerController::class, 'edit'])->name('worker.profile');
+    Route::post('/worker-profile', [WorkerController::class, 'update'])->name('worker.profile.update');
+});

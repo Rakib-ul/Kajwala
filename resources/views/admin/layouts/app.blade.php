@@ -42,7 +42,7 @@
             <a href="{{ route('admin.dashboard') }}">Dashboard</a>
             <a href="{{ route('admin.services.index') }}">Manage Services</a>
             <a href="{{ route('admin.workers.index') }}">Manage Workers</a>
-            <a href="#">Reports</a>
+            <a href="/">Go to home</a>
             <a href="{{ route('logout') }}"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 Logout

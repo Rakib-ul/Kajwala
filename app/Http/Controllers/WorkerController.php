@@ -132,29 +132,27 @@ class WorkerController extends Controller
         return view('worker-details', compact('worker'));
     }
 
-    public function edit()
+    public function edit(Worker $worker)
     {
-        $worker = auth()->guard('worker')->user();
         $services = Service::where('is_active', true)->get();
-        return view('worker-profile-edit', compact('worker', 'services'));
+        $worker->load('services'); // load current services
+        return view('admin.workers.worker-profile-edit', compact('worker', 'services'));
     }
 
-    public function update(Request $request)
-    {
-        $worker = auth()->guard('worker')->user();
 
+    public function update(Request $request, Worker $worker)
+    {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
-            'address' => 'required|string|max:255',
-            'hourly_rate' => 'required|numeric|min:0',
-            'experience' => 'required|integer|min:0',
-            'bio' => 'nullable|string|max:1000',
+            'phone' => 'nullable|string|max:20',
+            'skill' => 'nullable|string|max:255',
             'profile_image' => 'nullable|image|max:2048',
-            'services' => 'required|array',
-            'services.*' => 'exists:services,id'
+            'services' => 'nullable|array',
+            'services.*' => 'exists:services,id',
+            'is_verified' => 'required|boolean',
         ]);
 
+        // Handle profile image upload
         if ($request->hasFile('profile_image')) {
             if ($worker->profile_image) {
                 Storage::disk('public')->delete($worker->profile_image);
@@ -163,9 +161,13 @@ class WorkerController extends Controller
         }
 
         $worker->update($validated);
-        $worker->services()->sync($validated['services']);
 
-        return redirect()->route('worker.profile')->with('success', 'Profile updated successfully!');
+        // Sync services
+        if (isset($validated['services'])) {
+            $worker->services()->sync($validated['services']);
+        }
+
+        return redirect()->route('admin.dashboard')->with('success', 'Worker updated successfully!');
     }
 
     // ===== Admin CRUD =====
