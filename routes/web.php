@@ -20,9 +20,13 @@ Route::get('/about', function () {
     return view('about');
 });
 
+
 Route::get('/services', function () {
     return view('services');
 });
+
+// Dynamic service category route
+Route::get('/services/{category}', [ServiceController::class, 'category'])->name('services.category');
 
 // Route::get('/contact', function () {
 //     return view('contact');

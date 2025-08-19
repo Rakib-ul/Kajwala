@@ -46,4 +46,28 @@ class ServiceController extends Controller
             'location' => $request->location
         ]);
     }
+
+    // Show profiles for a given service category
+    public function category($category)
+    {
+        // Map category slug to service name if needed
+        $serviceName = str_replace(['-', '_'], ' ', $category);
+        $serviceName = ucwords($serviceName);
+
+        // Find service by name
+        $service = \App\Models\Service::whereRaw('LOWER(name) = ?', [strtolower($serviceName)])->first();
+        if (!$service) {
+            abort(404, 'Service not found');
+        }
+
+        // Get workers for this service
+        $profiles = \App\Models\Worker::whereHas('services', function ($q) use ($service) {
+            $q->where('service_id', $service->id);
+        })->get();
+
+        return view('service_category', [
+            'category' => $category,
+            'profiles' => $profiles,
+        ]);
+    }
 }
