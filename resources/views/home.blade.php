@@ -1982,35 +1982,34 @@
       <h1>Professional Services At Your Doorstep</h1>
       <p>Find trusted professionals for all your home and office needs. Fast, reliable, and affordable services across Bangladesh.</p>
       
-    
-      <div class="hero-stats">
-        <div class="stat-item">
+      <div class="stats-container">
+        <div class="stat-card">
           <div class="stat-icon">
             <i class="fas fa-users"></i>
           </div>
-          <div class="stat-text">
-            <h3>5,000+</h3>
-            <p>Happy Customers</p>
+          <div class="stat-content">
+            <h3 class="stat-number">5,000+</h3>
+            <p class="stat-label">Happy Customers</p>
           </div>
         </div>
         
-        <div class="stat-item">
+        <div class="stat-card">
           <div class="stat-icon">
             <i class="fas fa-user-cog"></i>
           </div>
-          <div class="stat-text">
-            <h3>1,200+</h3>
-            <p>Verified Providers</p>
+          <div class="stat-content">
+            <h3 class="stat-number">1,200+</h3>
+            <p class="stat-label">Verified Providers</p>
           </div>
         </div>
         
-        <div class="stat-item">
+        <div class="stat-card">
           <div class="stat-icon">
             <i class="fas fa-map-marker-alt"></i>
           </div>
-          <div class="stat-text">
-            <h3>25+</h3>
-            <p>Cities Covered</p>
+          <div class="stat-content">
+            <h3 class="stat-number">25+</h3>
+            <p class="stat-label">Cities Covered</p>
           </div>
         </div>
       </div>
@@ -2021,183 +2020,246 @@
     </div>
   </div>
 </section>
-
 <style>
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 80px 0;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, rgba(41,47,54,0.85) 0%, rgba(65,72,82,0.85) 100%), 
-                url('{{ asset('images/wall.jpg') }}') no-repeat center center/cover;
-    background-attachment: fixed;
-    color: white;
-  }
+/* Updated Hero Section CSS */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(41,47,54,0.85) 0%, rgba(65,72,82,0.85) 100%), 
+              url('{{ asset('images/wall.jpg') }}') no-repeat center center/cover;
+  background-attachment: fixed;
+  color: white;
+}
 
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 600px;
-    animation: fadeInUp 0.8s ease-out;
-  }
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  animation: fadeInUp 0.8s ease-out;
+}
 
-  .hero h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 20px;
-    font-family: 'Montserrat', sans-serif;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  }
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
 
-  .hero p {
-    font-size: 1.25rem;
-    margin-bottom: 30px;
-    opacity: 0.9;
-    max-width: 90%;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  }
+.hero p {
+  font-size: 1.25rem;
+  margin-bottom: 30px;
+  opacity: 0.9;
+  max-width: 90%;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
 
-  .hero-btns {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-  }
+.hero-btns {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
 
-  .hero-btns .btn {
-    padding: 14px 28px;
-    font-size: 1rem;
-    min-width: 180px;
-  }
+.hero-btns .btn {
+  padding: 14px 28px;
+  font-size: 1rem;
+  min-width: 180px;
+}
 
-  .hero-stats {
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-  }
+/* New Stats Container */
+.stats-container {
+  display: flex;
+  justify-content: space-between; /* Distribute space evenly */
+  gap: 20px;
+  margin-top: 40px;
+  width: 100%; /* Take full width */
+  max-width: 100%; /* Ensure it doesn't exceed screen width */
+  padding: 0 20px; /* Add some padding on sides */
+}
 
-  .stat-item {
-    display: flex;
-    align-items: center;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(5px);
-    padding: 15px 20px;
-    border-radius: var(--border-radius);
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: var(--transition);
-  }
+.stat-card {
+  flex: 1; /* Each card takes equal space */
+  min-width: 200px; /* Minimum width for each card */
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(5px);
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 25px;
+  display: flex;
+  flex-direction: column; /* Stack icon and content vertically */
+  align-items: center; /* Center horizontally */
+  text-align: center; /* Center text */
+  transition: var(--transition);
+}
 
-  .stat-item:hover {
-    background: rgba(255,255,255,0.15);
-    transform: translateY(-3px);
-  }
+.stat-card:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
 
-  .stat-icon {
-    font-size: 2rem;
-    margin-right: 15px;
-    color: var(--accent);
-  }
+.stat-icon {
+  font-size: 2.5rem; /* Larger icon */
+  margin-bottom: 15px; /* Space below icon */
+  color: var(--accent);
+}
 
-  .stat-text h3 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 5px;
-    background: linear-gradient(to right, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
 
-  .stat-text p {
-    font-size: 0.9rem;
-    opacity: 0.8;
-  }
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
+.stat-label {
+  font-size: 1rem;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero-image {
+  position: absolute;
+  right: 5%;
+  bottom: 0;
+  width: 45%;
+  max-width: 650px;
+  z-index: 1;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .stats-container {
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: center; /* Center cards when they wrap */
+  }
+    .stat-card {
+    min-width: 150px; /* Smaller min-width on mobile */
+    flex: none; /* Don't grow/shrink equally */
+    width: calc(33.33% - 20px); /* 3 cards per row */
+  }
+  
   .hero-image {
-    position: absolute;
-    right: 5%;
-    bottom: 0;
     width: 45%;
-    max-width: 650px;
-    z-index: 1;
-    animation: float 6s ease-in-out infinite;
   }
+  
+  .stat-card {
+    padding: 20px;
+  }
+  
+.stat-icon {
+    font-size: 1.8rem;
+    margin-right: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+  
+  .stat-number {
+    font-size: 1.0rem;
+  }
+}
 
-  @keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-    100% { transform: translateY(0px); }
+@media (max-width: 768px) {
+  .hero {
+    padding: 120px 0 60px;
+    text-align: center;
   }
+@media (max-width: 576px) {
+  .stat-card {
+    width: 100%; /* Full width on very small screens */
+    max-width: 250px;
+    margin-bottom: 15px;
+  }
+}
+  .hero-content {
+    max-width: 100%;
+  }
+  
+  .hero-image {
+    display: none;
+  }
+  
+  .hero p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hero-btns {
+    justify-content: center;
+  }
+  
+  .stats-container {
+    justify-content: center;
+  }
+  
+  .stat-card {
+    min-width: 120px;
+    padding: 15px;
+  }
+}
 
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+@media (max-width: 576px) {
+  .hero h1 {
+    font-size: 2.2rem;
   }
-
-  @media (max-width: 992px) {
-    .hero h1 {
-      font-size: 2.5rem;
-    }
-    
-    .hero-image {
-      width: 45%;
-    }
+  
+  .hero p {
+    font-size: 1.1rem;
   }
-
-  @media (max-width: 768px) {
-    .hero {
-      padding: 120px 0 60px;
-      text-align: center;
-    }
-    
-    .hero-content {
-      max-width: 100%;
-    }
-    
-    .hero-image {
-      display: none;
-    }
-    
-    .hero p {
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    .hero-btns {
-      justify-content: center;
-    }
-    
-    .hero-stats {
-      justify-content: center;
-    }
+  
+  .hero-btns {
+    flex-direction: column;
+    gap: 10px;
   }
-
-  @media (max-width: 576px) {
-    .hero h1 {
-      font-size: 2.2rem;
-    }
-    
-    .hero p {
-      font-size: 1.1rem;
-    }
-    
-    .hero-btns {
-      flex-direction: column;
-      gap: 10px;
-    }
-    
-    .hero-btns .btn {
-      width: 100%;
-    }
+  
+  .hero-btns .btn {
+    width: 100%;
   }
+  
+  .stats-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .stat-card {
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+  }
+}
 </style>
 
   <!-- Search Section - Redesigned -->
