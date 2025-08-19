@@ -8,6 +8,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\WorkerController;
 //azam
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\NewsletterController;
 
 // Public Routes
 Route::get('/', function () {
@@ -163,3 +164,5 @@ Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
 Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END
 
+//subscriber azam
+Route::post('/subscribe', [NewsletterController::class, 'store'])->name('newsletter.subscribe');

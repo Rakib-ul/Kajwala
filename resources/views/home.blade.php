@@ -2735,19 +2735,32 @@
   </section>
 
   <!-- Newsletter - Redesigned -->
-  <section class="newsletter">
+<section class="newsletter">
     <div class="container">
-      <div class="newsletter-content">
-        <h2>Stay Updated</h2>
-        <p>Subscribe to our newsletter for exclusive offers, service tips and updates.</p>
-        
-        <form class="newsletter-form">
-          <input type="email" placeholder="Your email address" class="newsletter-input" required>
-          <button type="submit" class="newsletter-btn">Subscribe</button>
-        </form>
-      </div>
+        <div class="newsletter-content">
+            <h2>Stay Updated</h2>
+            <p>Subscribe to our newsletter for exclusive offers, service tips and updates.</p>
+            
+            @if(session('newsletter_success'))
+                <div class="alert alert-success">
+                    {{ session('newsletter_success') }}
+                </div>
+            @endif
+            
+            @if(session('newsletter_error'))
+                <div class="alert alert-danger">
+                    {{ session('newsletter_error') }}
+                </div>
+            @endif
+            
+            <form class="newsletter-form" method="POST" action="{{ route('newsletter.subscribe') }}">
+                @csrf
+                <input type="email" name="email" placeholder="Your email address" class="newsletter-input" required value="{{ old('email') }}">
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
     </div>
-  </section>
+</section>
 
   <!-- Footer - Redesigned -->
   <footer class="footer">
