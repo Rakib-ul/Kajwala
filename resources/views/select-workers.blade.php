@@ -465,14 +465,14 @@
         </div>
       </div>
       
-      <div class="text-center">
-        <form action="{{ url('/payment') }}" method="GET">
-          <button type="submit" class="btn btn-primary" style="padding: 12px 30px; font-size: 1.1rem;">
+<div class="text-center">
+    <form action="{{ route('checkout') }}" method="GET">
+        <button type="submit" class="btn btn-primary" style="padding: 12px 30px; font-size: 1.1rem;">
             Confirm and Proceed to Payment
-          </button>
-        </form>
-      </div>
-    </div>
+        </button>
+    </form>
+</div>
+
   </main>
 
   <footer>
