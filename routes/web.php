@@ -134,8 +134,9 @@ Route::prefix('api')->middleware('auth:sanctum')->group(function () {
 // =====================
 // SSLCOMMERZ Routes
 // =====================
-Route::get('/checkout', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
-Route::get('/checkout2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+// SSLCOMMERZ Start
+Route::get('/check1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
+Route::get('/check2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
 
 Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
 Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
@@ -145,6 +146,8 @@ Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
 Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
 
 Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
+
 
 // =====================
 // Newsletter Subscribe
