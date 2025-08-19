@@ -6,6 +6,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\WorkerController;
+//azam
+use App\Http\Controllers\ContactController;
 
 // Public Routes
 Route::get('/', function () {
@@ -20,9 +22,23 @@ Route::get('/services', function () {
     return view('services');
 });
 
+// Route::get('/contact', function () {
+//     return view('contact');
+// });
+// Show contact form (your blade view)
+// Contact Page
 Route::get('/contact', function () {
     return view('contact');
+})->name('contact');
+
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+// Admin Contact Management
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/contacts', [ContactController::class, 'index'])->name('contacts.index');
 });
+
+//azam
 
 Route::get('/portfolio', function () {
     return view('portfolio');

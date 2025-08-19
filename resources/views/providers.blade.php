@@ -762,7 +762,7 @@
         <section class="categories-section">
             <div class="section-header">
                 <h2 class="section-title">Service Categories</h2>
-                <a href="#" class="view-all">
+                <a href="{{ url('/services') }}" class="view-all">
                     View all categories
                     <i class="fas fa-arrow-right"></i>
                 </a>
