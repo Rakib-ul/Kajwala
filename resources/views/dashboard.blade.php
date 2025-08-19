@@ -622,6 +622,39 @@
                 overflow-x: auto;
             }
         }
+
+        /* Additional styles for fixes */
+        .logout-btn {
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 12px 25px;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(90, 103, 216, 0.05);
+            color: var(--primary);
+        }
+        
+        .mt-3 {
+            margin-top: 1rem;
+        }
+        
+        .mb-3 {
+            margin-bottom: 1rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -638,7 +671,7 @@
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge">3</span>
                 </a>
-                <a href="{{ url('/profile') }}" class="user-avatar-link"> <!-- Added anchor tag -->
+                <a href="{{ url('/profile') }}" class="user-avatar-link">
                     <div class="user-avatar">
                         @if (auth()->user()->profile_picture)
                             <img src="{{ asset(auth()->user()->profile_picture) }}" alt="User Avatar">
@@ -649,6 +682,7 @@
                     </div>
                 </a>
             </div>
+        </div> <!-- Added missing closing div -->
     </header>
 
     <div class="container dashboard-container">
@@ -713,10 +747,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <form action="{{ route('logout') }}" method="POST">
+                        <form action="{{ route('logout') }}" method="POST" class="nav-form">
                             @csrf
-                            <button type="submit" class="nav-link"
-                                style="background:none; border:none; width:100%; text-align:left;">
+                            <button type="submit" class="logout-btn">
                                 <i class="fas fa-sign-out-alt"></i>
                                 <span>Logout</span>
                             </button>
@@ -776,78 +809,42 @@
                 <div class="card-header">
                     <h2><i class="fas fa-plus-circle"></i> Request New Service</h2>
                 </div>
+
+                {{-- LOCATION FORM --}}
                 <form id="location-form" class="location-form">
-                    <input type="text" id="location" class="form-control"
-                        placeholder="Enter your area (e.g., Mirpur 1)" required>
-                    <button type="submit" class="btn">
+                    @csrf
+                    <div class="mb-3">
+                        <input type="text" id="location" name="location" class="form-control"
+                            placeholder="Enter your area (e.g., Mirpur 1)" required>
+                    </div>
+                    <button id="findServiceBtn" type="submit" class="btn btn-primary">
                         <i class="fas fa-search"></i> Find Services
                     </button>
                 </form>
 
-                <div id="services-section" style="display: none; margin-top: 30px;">
-                    <h3 style="margin-bottom: 20px;">Available Services in <span id="user-location"
-                            style="color: var(--primary);"></span></h3>
-                    <form id="services-form" action="{{ url('/select-workers') }}" method="GET">
+                {{-- SERVICES SECTION (hidden initially) --}}
+                <div id="services-section" class="hidden">
+                    <h3 style="margin-bottom:20px;">
+                        Available Services in <span id="user-location" style="color:var(--primary);"></span>
+                    </h3>
+
+                    {{-- Form to submit selected services to workers page --}}
+                    <form id="services-form" action="{{ route('select.workers') }}" method="GET">
+                        {{-- Keep location --}}
+                        <input type="hidden" id="hidden-location" name="location" value="">
+
+                        {{-- Search box --}}
                         <input type="text" id="service-search" class="form-control"
-                            placeholder="Search services..." style="margin-bottom: 20px;">
+                            placeholder="Search services..." style="margin-bottom:20px;">
 
-                        <div class="services-grid">
-                            <label class="service-card">
-                                <input type="checkbox" name="services[]" value="Electrician">
-                                <div class="service-icon">
-                                    <i class="fas fa-bolt"></i>
-                                </div>
-                                <div class="service-name">Electrician</div>
-                                <div class="service-price">৳500-৳1500</div>
-                            </label>
-
-                            <label class="service-card">
-                                <input type="checkbox" name="services[]" value="Plumber">
-                                <div class="service-icon">
-                                    <i class="fas fa-faucet"></i>
-                                </div>
-                                <div class="service-name">Plumber</div>
-                                <div class="service-price">৳400-৳1200</div>
-                            </label>
-
-                            <label class="service-card">
-                                <input type="checkbox" name="services[]" value="Cleaner">
-                                <div class="service-icon">
-                                    <i class="fas fa-broom"></i>
-                                </div>
-                                <div class="service-name">Cleaner</div>
-                                <div class="service-price">৳300-৳800</div>
-                            </label>
-
-                            <label class="service-card">
-                                <input type="checkbox" name="services[]" value="Painter">
-                                <div class="service-icon">
-                                    <i class="fas fa-paint-roller"></i>
-                                </div>
-                                <div class="service-name">Painter</div>
-                                <div class="service-price">৳600-৳2000</div>
-                            </label>
-
-                            <label class="service-card">
-                                <input type="checkbox" name="services[]" value="Carpenter">
-                                <div class="service-icon">
-                                    <i class="fas fa-hammer"></i>
-                                </div>
-                                <div class="service-name">Carpenter</div>
-                                <div class="service-price">৳500-৳1800</div>
-                            </label>
-
-                            <label class="service-card">
-                                <input type="checkbox" name="services[]" value="AC Technician">
-                                <div class="service-icon">
-                                    <i class="fas fa-snowflake"></i>
-                                </div>
-                                <div class="service-name">AC Technician</div>
-                                <div class="service-price">৳800-৳2500</div>
-                            </label>
+                        {{-- Services grid --}}
+                        <div class="services-grid" id="services-grid">
+                            {{-- AJAX will inject service cards here --}}
                         </div>
+                        
+                        <input type="hidden" name="selected_service" id="selected_service">
 
-                        <button type="submit" class="btn" style="margin-top: 20px;">
+                        <button type="submit" class="btn btn-success mt-3" id="continueBtn">
                             <i class="fas fa-arrow-right"></i> Continue to Workers
                         </button>
                     </form>
@@ -855,65 +852,78 @@
             </div>
 
             <!-- Recent Requests Card -->
-            <table class="requests-table">
-                <thead>
-                    <tr>
-                        <th>Service</th>
-                        <th>Date</th>
-                        <th>Worker</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($recentRequests as $request)
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-history"></i> Recent Service Requests</h2>
+                    <a href="{{ url('/service-history') }}" class="btn btn-outline btn-sm">
+                        <i class="fas fa-list"></i> View All
+                    </a>
+                </div>
+                <table class="requests-table">
+                    <thead>
                         <tr>
-                            <td>{{ $request->service->name }}</td>
-                            <td>{{ $request->created_at->format('d M Y') }}</td>
-                            <td>{{ $request->worker ? $request->worker->name : 'Not assigned' }}</td>
-                            <td>৳{{ number_format($request->price, 2) }}</td>
-                            <td>
-                                @php
-                                    $statusClasses = [
-                                        'pending' => 'status-pending',
-                                        'assigned' => 'status-processing',
-                                        'in_progress' => 'status-processing',
-                                        'completed' => 'status-completed',
-                                        'cancelled' => 'status-cancelled',
-                                    ];
-                                @endphp
-                                <span class="status {{ $statusClasses[$request->status] }}">
-                                    {{ ucfirst(str_replace('_', ' ', $request->status)) }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{{ url('/request-details/' . $request->id) }}"
-                                    class="btn btn-outline btn-sm">
-                                    <i class="fas fa-eye"></i> View
-                                </a>
-                            </td>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Worker</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            
+                    </thead>
+                    <tbody>
+                        @foreach ($recentRequests as $request)
+                            <tr>
+                                <td>{{ $request->service->name }}</td>
+                                <td>{{ $request->created_at->format('d M Y') }}</td>
+                                <td>{{ $request->worker ? $request->worker->name : 'Not assigned' }}</td>
+                                <td>৳{{ number_format($request->price, 2) }}</td>
+                                <td>
+                                    @php
+                                        $statusClasses = [
+                                            'pending' => 'status-pending',
+                                            'assigned' => 'status-processing',
+                                            'in_progress' => 'status-processing',
+                                            'completed' => 'status-completed',
+                                            'cancelled' => 'status-cancelled',
+                                        ];
+                                    @endphp
+                                    <span class="status {{ $statusClasses[$request->status] }}">
+                                        {{ ucfirst(str_replace('_', ' ', $request->status)) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ url('/request-details/' . $request->id) }}"
+                                        class="btn btn-outline btn-sm">
+                                        <i class="fas fa-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
             <!-- Services Grid -->
-            <div class="services-grid">
-                @foreach ($services as $service)
-                    <label class="service-card">
-                        <input type="checkbox" name="services[]" value="{{ $service->id }}">
-                        <div class="service-icon">
-                            @if ($service->icon)
-                                <i class="{{ $service->icon }}"></i>
-                            @else
-                                <i class="fas fa-tools"></i>
-                            @endif
-                        </div>
-                        <div class="service-name">{{ $service->name }}</div>
-                        <div class="service-price">৳{{ $service->min_price }}-৳{{ $service->max_price }}</div>
-                    </label>
-                @endforeach
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-concierge-bell"></i> Popular Services</h2>
+                </div>
+                <div class="services-grid">
+                    @foreach ($services as $service)
+                        <label class="service-card">
+                            <input type="checkbox" name="services[]" value="{{ $service->id }}">
+                            <div class="service-icon">
+                                @if ($service->icon)
+                                    <i class="{{ $service->icon }}"></i>
+                                @else
+                                    <i class="fas fa-tools"></i>
+                                @endif
+                            </div>
+                            <div class="service-name">{{ $service->name }}</div>
+                            <div class="service-price">৳{{ $service->min_price }}-৳{{ $service->max_price }}</div>
+                        </label>
+                    @endforeach
+                </div>
             </div>
         </main>
     </div>
@@ -967,81 +977,131 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Location form submission
-            const locationForm = document.getElementById('location-form');
-            const locationInput = document.getElementById('location');
-            const servicesSection = document.getElementById('services-section');
-            const locationText = document.getElementById('user-location');
-            const servicesForm = document.getElementById('services-form');
+document.addEventListener('DOMContentLoaded', function () {
+    const locationForm = document.getElementById('location-form');
+    const locationInput = document.getElementById('location');
+    const servicesSection = document.getElementById('services-section');
+    const locationText = document.getElementById('user-location');
+    const servicesForm = document.getElementById('services-form');
+    const servicesGrid = document.getElementById('services-grid');
+    const hiddenLocation = document.getElementById('hidden-location');
+    const searchInput = document.getElementById('service-search');
 
-            if (locationForm) {
-                locationForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const location = locationInput.value.trim();
-                    if (location !== '') {
-                        locationText.textContent = location;
-                        servicesSection.style.display = 'block';
+    // --- 1. Submit location form and fetch services ---
+    if (locationForm) {
+        locationForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const location = locationInput.value.trim();
+            if (!location) {
+                alert('Please enter your location to find available services.');
+                return;
+            }
 
-                        // Scroll to services section
-                        servicesSection.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    } else {
-                        alert('Please enter your location to find available services.');
+            // Show loading
+            servicesGrid.innerHTML = '<p>Loading...</p>';
+            servicesSection.style.display = 'block';
+
+            // Fetch services from backend
+            fetch(`{{ route('services.search') }}?location=${encodeURIComponent(location)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.services || data.services.length === 0) {
+                        servicesGrid.innerHTML = '<p>No services found for this location.</p>';
+                        return;
                     }
+
+                    // Render cards
+                    servicesGrid.innerHTML = data.services.map(s => serviceCardHTML(s)).join('');
+                    locationText.textContent = location;
+                    hiddenLocation.value = location;
+
+                    // Attach events after rendering
+                    attachFilter();
+                    attachCardClickListeners();
+                })
+                .catch(() => {
+                    servicesGrid.innerHTML = '<p>Something went wrong. Please try again.</p>';
                 });
+        });
+    }
+
+    // --- 2. Validate service form before submit ---
+    if (servicesForm) {
+        servicesForm.addEventListener('submit', function (e) {
+            const selectedServices = this.querySelectorAll('input[name="services[]"]:checked');
+            if (selectedServices.length === 0) {
+                e.preventDefault();
+                alert('Please select at least one service to continue.');
             }
+        });
+    }
 
-            // Service form validation
-            if (servicesForm) {
-                servicesForm.addEventListener('submit', function(e) {
-                    const selectedServices = [...document.querySelectorAll(
-                        'input[name="services[]"]:checked')];
-                    if (selectedServices.length === 0) {
-                        e.preventDefault();
-                        alert('Please select at least one service to continue.');
-                    }
-                });
-            }
+    // --- 3. Service card HTML template ---
+    function serviceCardHTML(service) {
+        return `
+        <label class="service-card" 
+               data-name="${escapeHtml(service.name)}" 
+               data-cat="${escapeHtml(service.category || '')}">
+            <input type="checkbox" name="services[]" value="${service.id}" style="display:none;">
+            <div class="service-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <div class="service-name">${escapeHtml(service.name)}</div>
+            <div class="service-price">৳${Number(service.price || 0).toLocaleString()}</div>
+            <div class="service-desc" style="font-size:12px;opacity:.8;margin-top:6px;">
+                ${escapeHtml(service.description || '')}
+            </div>
+        </label>`;
+    }
 
-            // Service search functionality
-            const searchInput = document.getElementById('service-search');
-            if (searchInput) {
-                searchInput.addEventListener('input', function() {
-                    const query = this.value.toLowerCase();
-                    const serviceCards = document.querySelectorAll('.service-card');
+    // --- 4. Escape HTML helper ---
+    function escapeHtml(str) {
+        return (str || '').replace(/[&<>"']/g, function (m) {
+            return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[m];
+        });
+    }
 
-                    serviceCards.forEach(card => {
-                        const serviceName = card.querySelector('.service-name').textContent
-                            .toLowerCase();
-                        card.style.display = serviceName.includes(query) ? 'block' : 'none';
-                    });
-                });
-            }
-
-            // Service card selection
-            const serviceCards = document.querySelectorAll('.service-card');
-            serviceCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const checkbox = this.querySelector('input');
-                    checkbox.checked = !checkbox.checked;
-                    this.classList.toggle('selected', checkbox.checked);
+    // --- 5. Attach search filter ---
+    function attachFilter() {
+        if (searchInput) {
+            searchInput.addEventListener('input', function () {
+                const query = this.value.toLowerCase();
+                const cards = servicesGrid.querySelectorAll('.service-card');
+                cards.forEach(card => {
+                    const name = (card.dataset.name || '').toLowerCase();
+                    const cat = (card.dataset.cat || '').toLowerCase();
+                    card.style.display = (name.includes(query) || cat.includes(query)) ? '' : 'none';
                 });
             });
+        }
+    }
 
-            // Set active nav link based on current page
-            const currentPage = window.location.pathname;
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
+    // --- 6. Toggle service selection ---
+    function attachCardClickListeners() {
+        const cards = servicesGrid.querySelectorAll('.service-card');
+        cards.forEach(card => {
+            card.addEventListener('click', function (e) {
+                const checkbox = card.querySelector('input[type="checkbox"]');
+                // Toggle checkbox + class
+                checkbox.checked = !checkbox.checked;
+                card.classList.toggle('selected', checkbox.checked);
             });
         });
-    </script>
+    }
+
+    // --- 7. Active nav highlight ---
+    const currentPage = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+});
+</script>
+
 </body>
 
 </html>

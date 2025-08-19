@@ -156,3 +156,14 @@ Route::middleware('auth:worker')->group(function () {
     Route::get('/worker-profile', [WorkerController::class, 'edit'])->name('worker.profile');
     Route::post('/worker-profile', [WorkerController::class, 'update'])->name('worker.profile.update');
 });
+
+Route::get('/services/search', [ServiceController::class, 'searchByLocation'])
+     ->name('services.search');
+
+// Page: show matching workers
+Route::get('/select-workers', [ServiceController::class, 'selectWorkers'])
+     ->name('select.workers');
+
+Route::post('/select-worker', [WorkerController::class, 'showAvailableWorkers'])->name('workers.select');
+
+Route::get('/payment', [PaymentController::class, 'showCheckoutForm'])->name('payment.show');

@@ -13,7 +13,7 @@ class Worker extends Authenticatable
     protected $guard = 'worker';
 
     protected $fillable = [
-        'name','email','phone','password','address',
+        'name','email','phone','password','location',
         'hourly_rate','experience_years','profile_image','documents','bio',
         'is_available','is_verified','rating'
     ];
