@@ -13,7 +13,13 @@ class UpdateWorkerRequest extends FormRequest
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:30',
             'skill' => 'nullable|string|max:255',
+            'service' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'experience_years' => 'nullable|integer|min:0',
+            'hourly_rate' => 'nullable|numeric|min:0',
+            'rating' => 'nullable|numeric|min:0|max:5',
             'is_verified' => 'nullable|boolean',
+            'is_available' => 'nullable|boolean',
         ];
     }
 }

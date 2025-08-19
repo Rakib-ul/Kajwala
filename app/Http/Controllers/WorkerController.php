@@ -39,7 +39,7 @@ class WorkerController extends Controller
             'address' => 'required|string|max:255',
             'service' => 'required|string|in:plumber,electrician,cleaner,painter,mover',
             'hourly_rate' => 'required|numeric|min:0',
-            'experience' => 'required|integer|min:0',
+            'experience_years' => 'required|integer|min:0',
             'profile_image' => 'nullable|image|max:2048',
             'documents' => 'nullable|file|mimes:pdf,jpg,png|max:5120'
         ]);
@@ -59,11 +59,13 @@ class WorkerController extends Controller
             'password' => bcrypt($validated['password']),
             'address' => $validated['address'],
             'service' => $validated['service'],
+            'skill' => $validated['service'], // Also set skill field for backward compatibility
             'hourly_rate' => $validated['hourly_rate'],
-            'experience_years' => $validated['experience'],
+            'experience_years' => $validated['experience_years'],
             'profile_image' => $profileImagePath,
             'documents' => $documentPath,
             'is_verified' => false,
+            'is_available' => true,
         ]);
 
         return redirect()->route('worker.login')->with('success', 'Registration successful! Your account is pending verification.');
@@ -148,7 +150,7 @@ class WorkerController extends Controller
             'phone' => 'required|string|max:20',
             'address' => 'required|string|max:255',
             'hourly_rate' => 'required|numeric|min:0',
-            'experience' => 'required|integer|min:0',
+            'experience_years' => 'required|integer|min:0',
             'bio' => 'nullable|string|max:1000',
             'profile_image' => 'nullable|image|max:2048',
             'services' => 'required|array',

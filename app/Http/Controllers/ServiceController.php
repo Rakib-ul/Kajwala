@@ -15,9 +15,11 @@ class ServiceController extends Controller
         $categoryName = str_replace(['-', '_'], ' ', $category);
         $categoryName = ucwords($categoryName);
         
-        // Start with base query
-        $query = Worker::whereRaw('LOWER(skill) LIKE ?', ['%' . strtolower($categoryName) . '%'])
-            ->where('is_verified', true);
+        // Start with base query - check both skill and service fields
+        $query = Worker::where(function($q) use ($categoryName) {
+            $q->whereRaw('LOWER(skill) LIKE ?', ['%' . strtolower($categoryName) . '%'])
+              ->orWhereRaw('LOWER(service) LIKE ?', ['%' . strtolower($categoryName) . '%']);
+        })->where('is_verified', true);
         
         // Apply filters
         $query = $this->applyFilters($query, $request);
@@ -29,8 +31,10 @@ class ServiceController extends Controller
         $profiles = $query->get();
         
         // Get unique locations for filter dropdown
-        $locations = Worker::whereRaw('LOWER(skill) LIKE ?', ['%' . strtolower($categoryName) . '%'])
-            ->where('is_verified', true)
+        $locations = Worker::where(function($q) use ($categoryName) {
+            $q->whereRaw('LOWER(skill) LIKE ?', ['%' . strtolower($categoryName) . '%'])
+              ->orWhereRaw('LOWER(service) LIKE ?', ['%' . strtolower($categoryName) . '%']);
+        })->where('is_verified', true)
             ->distinct()
             ->pluck('address')
             ->filter()
@@ -38,8 +42,10 @@ class ServiceController extends Controller
             ->values();
         
         // Get unique experience levels for filter dropdown
-        $experienceLevels = Worker::whereRaw('LOWER(skill) LIKE ?', ['%' . strtolower($categoryName) . '%'])
-            ->where('is_verified', true)
+        $experienceLevels = Worker::where(function($q) use ($categoryName) {
+            $q->whereRaw('LOWER(skill) LIKE ?', ['%' . strtolower($categoryName) . '%'])
+              ->orWhereRaw('LOWER(service) LIKE ?', ['%' . strtolower($categoryName) . '%']);
+        })->where('is_verified', true)
             ->distinct()
             ->pluck('experience_years')
             ->filter()

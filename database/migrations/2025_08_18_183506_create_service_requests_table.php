@@ -11,6 +11,8 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('service_id')->constrained('services')->cascadeOnDelete();
             $table->foreignId('worker_id')->nullable()->constrained('workers')->nullOnDelete();
+            $table->string('location')->nullable();
+            $table->text('description')->nullable();
             $table->enum('status', ['pending','assigned','in_progress','completed','cancelled'])->default('pending');
             $table->dateTime('scheduled_at')->nullable();
             $table->text('notes')->nullable();

@@ -6,13 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('user')->after('password'); // admin | user
-        });
+        // The role field is now added in the base users table migration
+        // No additional fields needed
     }
     public function down(): void {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
-        });
+        // No columns to drop
     }
 };

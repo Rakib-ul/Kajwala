@@ -80,9 +80,9 @@ class DashboardController extends Controller
             'service_id' => $request->service_id,
             'description' => $request->description,
             'location' => $request->location,
-            'scheduled_date' => $request->scheduled_date,
+            'notes' => $request->notes,
+            'scheduled_at' => $request->scheduled_at,
             'status' => 'pending',
-            'price' => $this->calculateServicePrice($request->service_id)
         ]);
 
         return redirect()->route('dashboard')
@@ -99,8 +99,13 @@ class DashboardController extends Controller
     {
         $service = Service::findOrFail($serviceId);
         
-        // Simple calculation - you can implement more complex logic here
-        return ($service->min_price + $service->max_price) / 2;
+        // Use min_price and max_price if available, otherwise fall back to price
+        if ($service->min_price && $service->max_price) {
+            return ($service->min_price + $service->max_price) / 2;
+        }
+        
+        // Fall back to single price field
+        return $service->price ?? 0;
     }
 
     /**

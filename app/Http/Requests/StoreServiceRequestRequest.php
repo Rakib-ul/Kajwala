@@ -17,7 +17,8 @@ class StoreServiceRequestRequest extends FormRequest
             'service_id' => 'required|exists:services,id',
             'description' => 'required|string|max:500',
             'location' => 'required|string|max:255',
-            'scheduled_date' => 'required|date|after:now',
+            'scheduled_at' => 'required|date|after:now',
+            'notes' => 'nullable|string|max:1000',
         ];
     }
 }

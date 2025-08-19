@@ -39,10 +39,20 @@ class AdminController extends Controller
             'description' => 'required|string',
             'icon' => 'nullable|string|max:255',
             'slug' => 'required|string|unique:services,slug',
+            'category' => 'nullable|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'min_price' => 'nullable|numeric|min:0',
+            'max_price' => 'nullable|numeric|min:0',
+            'is_active' => 'boolean',
         ]);
 
         Service::create($validated);
         return redirect()->route('admin.services.index')->with('success', 'Service created successfully!');
+    }
+
+    public function show(Service $service)
+    {
+        return view('admin.services.show', compact('service'));
     }
 
     public function edit(Service $service)
@@ -57,6 +67,11 @@ class AdminController extends Controller
             'description' => 'required|string',
             'icon' => 'nullable|string|max:255',
             'slug' => 'required|string|unique:services,slug,' . $service->id,
+            'category' => 'nullable|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'min_price' => 'nullable|numeric|min:0',
+            'max_price' => 'nullable|numeric|min:0',
+            'is_active' => 'boolean',
         ]);
 
         $service->update($validated);

@@ -11,17 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            // Add phone column only if it doesn't already exist
-            if (!Schema::hasColumn('users', 'phone')) {
-                $table->string('phone')->nullable()->after('email');
-            }
-
-            // Add profile_picture column only if it doesn't already exist
-            if (!Schema::hasColumn('users', 'profile_picture')) {
-                $table->string('profile_picture')->nullable()->after('phone');
-            }
-        });
+        // These fields are now added in the base users table migration
+        // No additional fields needed
     }
 
     /**
@@ -29,13 +20,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            if (Schema::hasColumn('users', 'phone')) {
-                $table->dropColumn('phone');
-            }
-            if (Schema::hasColumn('users', 'profile_picture')) {
-                $table->dropColumn('profile_picture');
-            }
-        });
+        // No columns to drop
     }
 };

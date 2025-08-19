@@ -11,9 +11,8 @@ return new class extends Migration
      */
    public function up(): void
 {
-    Schema::table('workers', function (Blueprint $table) {
-        $table->string('service')->nullable();
-    });
+    // These fields are now added in the base workers table migration
+    // No additional fields needed
 }
 
     /**
@@ -21,8 +20,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('workers', function (Blueprint $table) {
-            //
-        });
+        // No columns to drop
     }
 };

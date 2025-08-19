@@ -6,14 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::table('workers', function (Blueprint $table) {
-            $table->decimal('rating', 3, 1)->default(5.0)->after('hourly_rate');
-        });
+        // These fields are now added in the base workers table migration
+        // No additional fields needed
     }
     
     public function down(): void {
-        Schema::table('workers', function (Blueprint $table) {
-            $table->dropColumn('rating');
-        });
+        // No columns to drop
     }
 };

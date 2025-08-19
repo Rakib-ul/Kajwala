@@ -6,14 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::table('workers', function (Blueprint $table) {
-            $table->string('address')->nullable()->after('phone');
-            $table->string('profile_image')->nullable()->after('address');
-        });
+        // These fields are now added in the base workers table migration
+        // No additional fields needed
     }
     public function down(): void {
-        Schema::table('workers', function (Blueprint $table) {
-            $table->dropColumn(['address', 'profile_image']);
-        });
+        // No columns to drop
     }
 };
