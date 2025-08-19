@@ -18,18 +18,22 @@ class AuthController extends Controller
     // Handle login
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($request->only('email', 'password'))) {
-            $request->session()->regenerate();
-            return redirect('/dashboard')->with('success', 'Logged in successfully!');
+        if (auth()->attempt($credentials)) {
+
+            $user = auth()->user();
+
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard'); // Admin dashboard
+            }
+
+            return redirect()->route('dashboard'); // Normal user dashboard
         }
 
-        return back()->withErrors(['email' => 'Invalid email or password.']);
+        return back()->withErrors(['email' => 'Invalid credentials']);
     }
+
 
     // Show register form
     public function showRegisterForm()

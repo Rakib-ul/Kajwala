@@ -8,7 +8,11 @@ class Service extends Model
 {
     // Define the fillable fields
     protected $fillable = [
-        'name', 'description', 'price', 'is_active',
+        'name',
+        'category',
+        'price',
+        'description',
+        'is_active',
     ];
 
     // Relationship to ServiceRequests (one-to-many)
