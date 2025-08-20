@@ -49,10 +49,66 @@
       transition: var(--transition);
     }
     
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    
+    .header-content {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    
     header h1 {
       font-size: 2.5rem;
       margin-bottom: 10px;
       font-weight: 700;
+    }
+    
+    header p {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      opacity: 0.9;
+    }
+    
+    /* Navigation */
+    nav {
+      margin-top: 20px;
+    }
+    
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .nav-links a {
+      color: var(--white);
+      font-weight: 500;
+      padding: 8px 15px;
+      border-radius: 30px;
+      transition: var(--transition);
+      font-size: 1rem;
+      position: relative;
+    }
+    
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-3px);
+    }
+    
+    .nav-links a.active {
+      background: var(--white);
+      color: var(--primary);
+    }
+    
+    .nav-links li {
+      list-style: none;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
     }
     
     /* Contact Section */
@@ -168,6 +224,10 @@
     
     /* Responsive Adjustments */
     @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      
       .contact-form {
         padding: 30px;
       }
@@ -178,6 +238,18 @@
     }
     
     @media (max-width: 480px) {
+      .logo {
+        height: 50px;
+      }
+      
+      header h1 {
+        font-size: 1.8rem;
+      }
+      
+      header p {
+        font-size: 1rem;
+      }
+      
       .contact-form {
         padding: 25px;
       }
@@ -186,12 +258,21 @@
 </head>
 <body>
   <header>
-    <div class="container">
+    <div class="container header-content">
       <a href="{{ url('/') }}">
         <img src="{{ asset('images/kaajwala.png') }}" alt="KaajWala Logo" class="logo">
       </a>
       <h1>Contact KaajWala</h1>
       <p>Professional home services at your doorstep</p>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="{{ url('/') }}">Home</a></li>
+          <li><a href="{{ url('/about') }}">About</a></li>
+          <li><a href="{{ url('/services') }}">Services</a></li>
+          <li><a href="{{ url('/contact') }}" class="active">Contact</a></li>
+          <li><a href="{{ url('/portfolio') }}">Portfolio</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
