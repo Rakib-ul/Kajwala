@@ -100,6 +100,13 @@
       justify-content: center;
       flex-wrap: wrap;
       gap: 15px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .nav-links li {
+      list-style: none;
     }
     
     .nav-links a {
